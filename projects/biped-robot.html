@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10-Servo Biped Robot | Your Name</title>
+<meta name="description" content="A two-legged robot with five joints per leg, IMU-based balance, and a walking gait I tune against a simulator I wrote.">
+<meta property="og:title" content="10-Servo Biped Robot | Your Name">
+<meta property="og:description" content="A two-legged robot with five joints per leg, IMU-based balance, and a walking gait I tune against a simulator I wrote.">
+<meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f11" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="brand-mark">YN</span>Your Name</a>
+    <nav class="nav" aria-label="Main">
+      <a href="../index.html#hardware">Hardware</a>
+      <a href="../index.html#software">Software</a>
+      <a class="nav-hide" href="../index.html#about">About</a>
+      <a class="nav-hide" href="../index.html#contact">Contact</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../index.html#hardware">&larr; Hardware & Wearables</a></p>
+  <section class="project-hero">
+    <div class="card-top"><span class="label">2026</span><span class="status status--live">Balancing; gait in progress</span></div>
+    <h1>10-Servo Biped Robot</h1>
+    <p class="lede">A two-legged robot with five joints per leg, IMU-based balance, and a walking gait I tune against a simulator I wrote.</p>
+    <ul class="tags"><li>ESP32</li><li>PCA9685</li><li>MPU-6500</li><li>C++</li><li>Fusion</li></ul>
+    <dl class="facts"><div><dt>Role</dt><dd>Solo: CAD, wiring, firmware</dd></div><div><dt>Timeline</dt><dd>Sep 2026, ongoing</dd></div><div><dt>Hardware</dt><dd>10x MG90S, ESP32, PCA9685, MPU-6500</dd></div><div><dt>Control</dt><dd>Capture-point ankle balance</dd></div></dl>
+  </section>
+  <figure class="media media--placeholder" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">Robot standing on a desk, side view, legs straight</span></div></figure>
+  <div class="project-body">
+    <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#what-the-robot-taught-me">What the robot taught me</a></li><li><a href="#next">Next</a></li></ol></aside>
+    <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>Design and print a small humanoid biped from scratch and get it to stand and walk on its own, using hobby servos and an ESP32 instead of a kit.</p></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>Hardware.</strong> Ten MG90S servos (hip roll, hip pitch, knee, ankle pitch and ankle roll on each leg), driven by a PCA9685 PWM board. An MPU-6500 IMU on the head measures tilt and rotation rate.</li><li><strong>Standing up.</strong> The robot boots in a crouch, calibrates the gyro, then rises along a smooth cosine curve. It probes each ankle by two degrees to learn which way the IMU reads before it trusts its own balance loop.</li><li><strong>Balance.</strong> A capture-point controller adjusts the ankles from tilt and tilt rate. I added I2C bus recovery after the IMU bus locked up mid-run.</li><li><strong>Walking.</strong> A quasi-static three-phase step: shift weight over the stance foot, lift and swing the other leg, shift back. A host-side gait simulator checks that feet stay flat and never slide in double support before any change goes to the robot.</li></ul><div class="media-row"><figure class="media media--placeholder" style="--ratio: 4 / 3"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Short clip of the robot stepping, slowed down</span></div></figure></div></section><section id="what-the-robot-taught-me"><h2><span class="num">03</span>What the robot taught me</h2><div class="decision"><h3>Servo noise is sensor noise</h3><p>Servo buzz showed up as 40 to 60 degrees per second of gyro vibration while standing still. Cutting the rate filter from 15 Hz to 5 Hz removed about 2.7 degrees of false error from the balance signal.</p></div><div class="decision"><h3>Mass distribution decides the gait</h3><p>My first gait fell backward every time. The battery mounted behind the hips put the center of mass behind the ankles. I moved to a crouched gait with a hip shift that places the feet behind the hips, and tuned it from logged step data instead of guessing.</p></div><div class="decision"><h3>Weight budget from torque</h3><p>Working from the MG90S stall torque and my 12.5 cm legs, a knee in single support limits the whole robot to roughly 300 g. That number now drives every hardware change.</p></div></section><section id="next"><h2><span class="num">04</span>Next</h2><p>Re-baseline each servo's neutral angle and get a repeatable straight-line walk, then add turning. The robot has no hip yaw joint, so turning has to come from a leg stagger during double support.</p></section></article>
+  </div>
+</div>
+<div class="next-project">
+  <div class="wrap">
+    <a href="mantis-blades.html"><div><span class="label">Next project</span><h2>Mantis Blades</h2></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</main>
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <h2>Want to see something running? Ask me.</h2>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+        <a class="btn" href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <p class="fine">Designed and built by Your Name. Every project on this site is my own work.</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bambu-check | Your Name</title>
+<meta name="description" content="A desktop app that inspects 3D models for print failures before they happen, suggests a better orientation, and writes a ready-to-print Bambu Studio project.">
+<meta property="og:title" content="bambu-check | Your Name">
+<meta property="og:description" content="A desktop app that inspects 3D models for print failures before they happen, suggests a better orientation, and writes a ready-to-print Bambu Studio project.">
+<meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f11" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<script src="../assets/site.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="brand-mark">YN</span>Your Name</a>
+    <nav class="nav" aria-label="Main">
+      <a href="../index.html#hardware">Hardware</a>
+      <a href="../index.html#software">Software</a>
+      <a class="nav-hide" href="../index.html#about">About</a>
+      <a class="nav-hide" href="../index.html#contact">Contact</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../index.html#software">&larr; Software Tools</a></p>
+  <section class="project-hero">
+    <div class="card-top"><span class="label">2026</span><span class="status status--live">Built</span></div>
+    <h1>bambu-check</h1>
+    <p class="lede">A desktop app that inspects 3D models for print failures before they happen, suggests a better orientation, and writes a ready-to-print Bambu Studio project.</p>
+    <ul class="tags"><li>Python</li><li>3D geometry</li><li>Desktop app</li><li>pytest</li></ul>
+    <dl class="facts"><div><dt>Role</dt><dd>Solo: design and code</dd></div><div><dt>Timeline</dt><dd>Sep 2026</dd></div><div><dt>Inputs</dt><dd>.3mf, .stl, .obj, .step</dd></div><div><dt>Tests</dt><dd>240+ automated tests</dd></div></dl>
+  </section>
+  <figure class="media media--placeholder" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">App window with a part shown from below, overhang faces in red</span></div></figure>
+  <div class="project-body">
+    <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#design-decisions">Design decisions</a></li><li><a href="#results">Results</a></li></ol></aside>
+    <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>I kept losing prints to the same problems: unsupported overhangs, thin walls, long bridges, and settings that do not suit the part. I wanted a tool that catches them before the printer does.</p></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>Analysis.</strong> It reads a Bambu Studio project or a raw mesh or STEP file, then flags overhang faces, thin walls, risky bridge spans and known-bad settings.</li><li><strong>Orientation.</strong> It scores rotations and suggests a better one. Each part gets a category (structural, aesthetic or mixed) with the reasons for its guess, and changing the category re-scores the part.</li><li><strong>Plate.</strong> It packs parts on the bed, recommends settings, and exports a <code>.3mf</code> that opens straight in Bambu Studio.</li><li><strong>Two front ends, one library.</strong> An interactive 3D desktop app and the original command-line tool that writes an HTML report.</li></ul><div class="media-row"><figure class="media media--placeholder" style="--ratio: 4 / 3"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Before and after: suggested orientation</span></div></figure></div></section><section id="design-decisions"><h2><span class="num">03</span>Design decisions</h2><div class="decision"><h3>View from below</h3><p>The 3D view looks at each part from slightly below the horizon. Overhang faces point down, so the usual view from above hides every face worth looking at.</p></div><div class="decision"><h3>Verify the file, not the screen</h3><p>Bambu Studio throws away a whole project over one unknown value without an error. I check every exported file with Bambu Studio&#x27;s own headless command-line mode instead of trusting that it looks right.</p></div></section><section id="results"><h2><span class="num">04</span>Results</h2><p>Packaged as a Windows app I pinned to my taskbar and use before every print. Over 240 automated tests cover the analysis.</p></section></article>
+  </div>
+</div>
+<div class="next-project">
+  <div class="wrap">
+    <a href="shortgen.html"><div><span class="label">Next project</span><h2>shortgen</h2></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</main>
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <h2>Want to see something running? Ask me.</h2>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+        <a class="btn" href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <p class="fine">Designed and built by Your Name. Every project on this site is my own work.</p>
+  </div>
+</footer>
+</body>
+</html>

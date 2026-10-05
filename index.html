@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Name | Projects</title>
+<meta name="description" content="Hardware and software projects by Your Name: wearables, robots, and the tools I build.">
+<meta property="og:title" content="Your Name | Projects">
+<meta property="og:description" content="Hardware and software projects by Your Name: wearables, robots, and the tools I build.">
+<meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f11" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<script src="assets/site.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="brand-mark">YN</span>Your Name</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html#hardware">Hardware</a>
+      <a href="index.html#software">Software</a>
+      <a class="nav-hide" href="index.html#about">About</a>
+      <a class="nav-hide" href="index.html#contact">Contact</a>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="hero">
+  <div class="wrap">
+    <p class="label">Portfolio · 8 projects</p>
+    <h1>I design, print and program things that <em>move</em>.</h1>
+    <p class="lede">I'm Your Name, a student who builds wearable props, walking robots, and the software tools I need along the way. This site shows how each one works, the decisions behind it, and what broke on the way.</p>
+    <div class="hero-meta label">
+      <span><i class="dot"></i>Currently building: Sandevistan Spine</span>
+      <span>Fusion · ESP32 · Python · C++</span>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#hardware">See the projects <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap reveal" aria-label="Project index" style="padding-bottom: clamp(48px, 8vw, 96px)">
+  <div class="index-block">
+    <table>
+      <thead><tr><th class="mono">No.</th><th>Project</th><th class="hide-sm">Built with</th><th class="mono">Status</th></tr></thead>
+      <tbody><tr data-href="projects/sandevistan.html"><td class="mono">01</td><th scope="row"><a href="projects/sandevistan.html">Sandevistan Spine</a></th><td class="hide-sm">Fusion, ESP32-C3, WS2812B</td><td class="mono">In development</td></tr><tr data-href="projects/biped-robot.html"><td class="mono">02</td><th scope="row"><a href="projects/biped-robot.html">10-Servo Biped Robot</a></th><td class="hide-sm">ESP32, PCA9685, MPU-6500</td><td class="mono">Balancing; gait in progress</td></tr><tr data-href="projects/mantis-blades.html"><td class="mono">03</td><th scope="row"><a href="projects/mantis-blades.html">Mantis Blades</a></th><td class="hide-sm">ESP32, FastLED, 3D printing</td><td class="mono">Built</td></tr><tr data-href="projects/drone.html"><td class="mono">04</td><th scope="row"><a href="projects/drone.html">Cyberpunk Drone</a></th><td class="hide-sm">CAD, Flight electronics</td><td class="mono">Concept</td></tr><tr data-href="projects/jarvis.html"><td class="mono">05</td><th scope="row"><a href="projects/jarvis.html">JARVIS Voice Assistant</a></th><td class="hide-sm">Python, Whisper, LLM tool calling</td><td class="mono">In daily use</td></tr><tr data-href="projects/bambu-check.html"><td class="mono">06</td><th scope="row"><a href="projects/bambu-check.html">bambu-check</a></th><td class="hide-sm">Python, 3D geometry, Desktop app</td><td class="mono">Built</td></tr><tr data-href="projects/shortgen.html"><td class="mono">07</td><th scope="row"><a href="projects/shortgen.html">shortgen</a></th><td class="hide-sm">Python, Claude API, ffmpeg</td><td class="mono">Built</td></tr><tr data-href="projects/biz-scout.html"><td class="mono">08</td><th scope="row"><a href="projects/biz-scout.html">biz-scout</a></th><td class="hide-sm">Python, Flask, OpenStreetMap</td><td class="mono">Built</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="hardware">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">01 / hardware</span>
+      <div><h2>Hardware & Wearables</h2><p>Wearables and robots I design in Fusion, print, wire and program myself. Each one starts from a constraint: a weight budget, a torque limit, a wire that has to stay hidden.</p></div>
+    </div>
+    <div class="cards">
+<a class="card card--wide reveal" href="projects/sandevistan.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Spine worn on bare back, lit, dark room, three-quarter view</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Hardware · 2026</span><span class="status status--live">In development</span></div>
+    <h3>Sandevistan Spine</h3>
+    <p>A wearable cyberware spine from Cyberpunk 2077 that flexes with my back and fires a light-and-sound activation sequence. No straps, no visible wires.</p>
+    <ul class="tags"><li>Fusion</li><li>ESP32-C3</li><li>WS2812B</li><li>I2S audio</li><li>PLA</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+<a class="card reveal" href="projects/biped-robot.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Robot standing on a desk, side view, legs straight</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Hardware · 2026</span><span class="status status--live">Balancing; gait in progress</span></div>
+    <h3>10-Servo Biped Robot</h3>
+    <p>A two-legged robot with five joints per leg, IMU-based balance, and a walking gait I tune against a simulator I wrote.</p>
+    <ul class="tags"><li>ESP32</li><li>PCA9685</li><li>MPU-6500</li><li>C++</li><li>Fusion</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+<a class="card reveal" href="projects/mantis-blades.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Blades deployed on forearm, lit</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Hardware · 2026</span><span class="status">Built</span></div>
+    <h3>Mantis Blades</h3>
+    <p>Forearm-mounted blades from Cyberpunk 2077 with programmable LED effects driven by an ESP32.</p>
+    <ul class="tags"><li>ESP32</li><li>FastLED</li><li>3D printing</li><li>Wearable</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+<a class="card reveal" href="projects/drone.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Concept sketch or first CAD render</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Hardware · 2026</span><span class="status">Concept</span></div>
+    <h3>Cyberpunk Drone</h3>
+    <p>A custom-designed drone with a Cyberpunk-inspired body.</p>
+    <ul class="tags"><li>CAD</li><li>Flight electronics</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="software">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="label">02 / software</span>
+      <div><h2>Software Tools</h2><p>Tools I wrote to solve problems I had. Each one is tested, and most run as desktop apps I use every week.</p></div>
+    </div>
+    <div class="cards">
+<a class="card card--wide reveal" href="projects/jarvis.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Screen recording: say &#x27;Hey Jarvis&#x27;, ask a question, hear the answer</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Software · 2026</span><span class="status status--live">In daily use</span></div>
+    <h3>JARVIS Voice Assistant</h3>
+    <p>A desktop voice assistant that listens for a wake word, understands requests, and acts on my PC: apps, search, media, Spotify, and what is on my screen.</p>
+    <ul class="tags"><li>Python</li><li>Whisper</li><li>LLM tool calling</li><li>ElevenLabs</li><li>pytest</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+<a class="card reveal" href="projects/bambu-check.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">App window with a part shown from below, overhang faces in red</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Software · 2026</span><span class="status status--live">Built</span></div>
+    <h3>bambu-check</h3>
+    <p>A desktop app that inspects 3D models for print failures before they happen, suggests a better orientation, and writes a ready-to-print Bambu Studio project.</p>
+    <ul class="tags"><li>Python</li><li>3D geometry</li><li>Desktop app</li><li>pytest</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+<a class="card reveal" href="projects/shortgen.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">A finished 1080x1920 video, captions visible</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Software · 2026</span><span class="status status--live">Built</span></div>
+    <h3>shortgen</h3>
+    <p>A pipeline that turns a theme into finished vertical videos: an original story, narration, word-by-word captions and a background, for under a cent each.</p>
+    <ul class="tags"><li>Python</li><li>Claude API</li><li>ffmpeg</li><li>Speech models</li><li>pytest</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+<a class="card reveal" href="projects/biz-scout.html">
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Search results table for a neighborhood, sorted by lead score</span></div></figure>
+  <div class="card-body">
+    <div class="card-top"><span class="label">Software · 2026</span><span class="status status--live">Built</span></div>
+    <h3>biz-scout</h3>
+    <p>A local web app that maps small businesses in an area, finds the ones without a website, and ranks them as leads for freelance web design.</p>
+    <ul class="tags"><li>Python</li><li>Flask</li><li>OpenStreetMap</li><li>JavaScript</li><li>pytest</li></ul>
+    <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </div>
+</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="about">
+  <div class="wrap about-grid reveal">
+    <div><span class="label">03 / about</span><h2 style="margin-top:12px">About</h2></div>
+    <div class="about-text">
+      <p>I like projects where the hardware and the code have to agree. A walking robot is a torque budget and a control loop at the same time; a wearable prop is a weight budget, a battery and a light show.</p>
+      <p>I work alone on most of these, which means I do the CAD, printing, wiring, firmware and testing myself. I write down what fails and why, and the project pages here come from those notes.</p>
+      <!-- EDIT: add your school, grade, and what you want to study. -->
+    </div>
+    <ul class="skill-list">
+      <li><span>CAD</span><span>Fusion, parametric parts, joints and interference checks</span></li>
+      <li><span>Fabrication</span><span>FDM printing (Bambu H2D, dual material), finishing and paint</span></li>
+      <li><span>Electronics</span><span>ESP32, servos, IMUs, addressable LEDs, I2S audio, LiPo power</span></li>
+      <li><span>Code</span><span>Python, C++ (Arduino), JavaScript, Flask, pytest</span></li>
+    </ul>
+  </div>
+</section>
+</main>
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <h2>Want to see something running? Ask me.</h2>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+        <a class="btn" href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <p class="fine">Designed and built by Your Name. Every project on this site is my own work.</p>
+  </div>
+</footer>
+</body>
+</html>
