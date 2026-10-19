@@ -462,6 +462,10 @@ p { margin: 0 0 1em; }
 .has-scan:is(:hover, :focus-visible, .is-scanning) .scan li:nth-child(3) { transition-delay: .16s; }
 .has-scan:is(:hover, :focus-visible, .is-scanning) .scan li:nth-child(4) { transition-delay: .24s; }
 .has-scan:is(:hover, :focus-visible, .is-scanning) .scan::before { animation: scan-sweep .6s ease-out; }
+.scan li.is-left { flex-direction: row-reverse; transform: translate(-100%, 6px); }
+.scan li.is-left::before { margin: 0 -6px 0 0; }
+.scan li.is-left span { border-left: 0; border-right: 2px solid var(--yellow); }
+.has-scan:is(:hover, :focus-visible, .is-scanning) .scan li.is-left { transform: translateX(-100%); }
 @keyframes scan-sweep { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0; } }
 @media (max-width: 640px) { .scan li { font-size: 9px; } }
 
@@ -476,6 +480,85 @@ p { margin: 0 0 1em; }
 .card:hover .sandy .sandy-ghost, .sandy:hover .sandy-ghost {
   opacity: calc(0.8 - var(--i) * 0.2);
   transform: translateX(calc(var(--i) * -16px));
+}
+
+/* Concept diagram of the spine (drawn by site.js). Its ghosts are flat
+   colored silhouettes instead of tinted copies. */
+.spine { position: absolute; inset: 0; width: 100%; height: 100%; --led: #ff2a2a; }
+.spine .win, .spine .glow { fill: var(--led); transition: fill .5s; }
+.spine .glow { mix-blend-mode: screen; }
+.spine.sandy-ghost { filter: none; }
+.spine.sandy-ghost * { fill: var(--gc); stroke: var(--gc); animation: none; }
+.spine.sandy-ghost[style*="--i: 1"] { --gc: #b8ff3c; }
+.spine.sandy-ghost[style*="--i: 2"] { --gc: #27e3ff; }
+.spine.sandy-ghost[style*="--i: 3"] { --gc: #ff38d4; }
+.card:hover .sandy .spine.sandy-ghost, .sandy:hover .spine.sandy-ghost { opacity: calc(0.55 - var(--i) * 0.13); transform: translateX(calc(var(--i) * -26px)); }
+/* On the project page, hover belongs to the scanner; Engage runs the trail. */
+.sandy.has-scan:not(.is-active):hover .sandy-ghost { opacity: 0; transform: none; }
+.media--target.has-diagram::before { display: none; }
+.has-diagram .media__desc { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.media--target.has-diagram::after { display: none; }
+.media--target.has-diagram .hud .br { display: none; }
+
+/* Engage: charging, active, cooldown. */
+.sandy.is-charging .spine:not(.sandy-ghost) .win,
+.sandy.is-charging .spine:not(.sandy-ghost) .glow { animation: led-fill .08s steps(1) both; animation-delay: calc((5 - var(--k)) * 100ms); }
+@keyframes led-fill { from { opacity: .08; } to { opacity: 1; } }
+.sandy.is-active .spine { --led: #ff5a3c; }
+.sandy.is-active .spine .glow { animation: led-flick .14s steps(2) infinite; }
+@keyframes led-flick { 50% { opacity: .65; } }
+.sandy.is-cooldown .spine { --led: #6e0f12; }
+.sandy.is-cooldown .spine .stat { fill: var(--yellow); }
+.sandy:is(.is-charging, .is-active, .is-cooldown) .scan { display: none; }
+.sandy.is-active { z-index: 61; }
+.sandy.is-active .spine:not(.sandy-ghost) { animation: sandy-dash 2.8s steps(14) both; }
+.sandy.is-active .sandy-ghost {
+  opacity: calc(0.62 - var(--i) * 0.14);
+  translate: calc(var(--i) * -40px) 0;
+  animation: sandy-dash 2.8s steps(14) both, ghost-flick .18s steps(2) infinite;
+  animation-delay: calc(var(--i) * 90ms), 0s;
+}
+@keyframes sandy-dash { from { transform: translateX(-48px); } to { transform: translateX(48px); } }
+@keyframes ghost-flick { 50% { opacity: calc(0.4 - var(--i) * 0.1); } }
+
+.sandy-ctl {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 14px;
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+}
+.sandy-go[aria-disabled="true"] { background: var(--surface-2); color: var(--muted); --edge: var(--line-strong); cursor: default; }
+.sandy-states { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.sandy-states li { padding: 4px 9px; border: 1px solid var(--line); transition: background .15s, color .15s; }
+.sandy-states li.is-on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sandy-states li:nth-child(3).is-on { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.sandy-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.sandy-clock { color: var(--ink-2); min-width: 22ch; }
+.sandy-sound { margin-left: auto; }
+.sandy-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+.sandy-ctl, .sandy-note { position: relative; }
+.is-sandy .sandy-ctl, .is-sandy .sandy-note { z-index: 61; }
+
+/* The page around the spine drains of color while it is active. */
+.sandy-veil {
+  position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0; transition: opacity .3s steps(3);
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(60, 255, 170, .16) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .2) 0 1px, transparent 1px 3px);
+  -webkit-backdrop-filter: saturate(.2) brightness(.7);
+  backdrop-filter: saturate(.2) brightness(.7);
+}
+.is-sandy .sandy-veil { opacity: 1; }
+@media (max-width: 640px) {
+  .has-diagram .media__desc { display: none; }
+  .sandy-sound { margin-left: 0; }
+  .sandy-clock { min-width: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .spine:not(.sandy-ghost) .glow { animation: led-breathe 3.2s ease-in-out infinite; animation-delay: calc(var(--k) * -.3s); }
+}
+@keyframes led-breathe { 50% { opacity: .4; } }
+@media (prefers-reduced-motion: reduce) {
+  .sandy.is-active .spine, .sandy.is-active .spine .glow { animation: none; }
+  .sandy-veil { transition: none; }
 }
 
 /* ---------- Braindance build log ---------- */

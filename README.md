@@ -99,3 +99,11 @@ focusing or tapping the image shows them. Once a real photo is in, move each
 point onto its part by editing `--x` and `--y` (percent from the top left).
 The Sandevistan images have the `sandy` class, which trails colored
 afterimages on hover.
+
+Until they have a photo, both Sandevistan frames show a concept diagram of
+the spine that site.js draws (`spineSVG`). Removing `media--placeholder`
+from a frame (by putting a photo in it) removes the diagram too. The project
+page's Engage button runs the four activation states the firmware will use:
+idle, charging (LEDs light from the base up), active (time slows, the page
+drains of color and afterimages trail the spine) and cooldown. Timings live
+in `TIME` in `buildEngage`; the Sound button mutes the synthesized tones.

@@ -182,6 +182,186 @@ function el(tag, cls, text) {
   return n;
 }
 
+// Concept diagram of the Sandevistan spine, seen from behind and lying on
+// its side: the neck T-piece and rod, six vertebrae that shrink 5% each,
+// and the base housing. Each hood glows where its window lights the next
+// segment's nose. It fills the Sandevistan frames until there is a photo.
+function spineSVG() {
+  function poly(pts, L, H, fill, extra) {
+    return '<path d="M' + pts.map(function (p) {
+      return (p[0] * L).toFixed(1) + " " + (p[1] * H).toFixed(1);
+    }).join("L") + 'Z" fill="' + fill + '"' + (extra || "") + "/>";
+  }
+  function mirror(pts) { return pts.map(function (p) { return [p[0], -p[1]]; }); }
+  var WING = [[0.18, -0.25], [0.34, -0.5], [0.6, -0.5], [0.68, -0.43], [0.62, -0.25]];
+  var BODY = [[0, -0.2], [0.12, -0.26], [0.8, -0.26], [0.9, -0.22], [1, -0.22], [1, 0.22], [0.9, 0.22], [0.8, 0.26], [0.12, 0.26], [0, 0.2]];
+  var NOSE = [[-0.2, -0.12], [0, -0.17], [0, 0.17], [-0.2, 0.12]];
+
+  var segs = [], L = 188, H = 296, x = 214, y = 492, a = -6;
+  for (var i = 0; i < 6; i++) {
+    segs.push({ x: x, y: y, a: a, L: L, H: H });
+    var r = a * Math.PI / 180;
+    x += Math.cos(r) * L * 1.07;
+    y += Math.sin(r) * L * 1.07;
+    L *= 0.95; H *= 0.95; a += 2.4;
+  }
+
+  function glow(L, H, k) {
+    return '<g class="glow" style="--k:' + k + '"><ellipse cx="' + (1.05 * L) + '" cy="0" rx="' + (0.2 * L) + '" ry="' + (0.34 * H) + '" opacity=".14"/>' +
+      '<ellipse cx="' + (1.03 * L) + '" cy="0" rx="' + (0.11 * L) + '" ry="' + (0.22 * H) + '" opacity=".3"/></g>';
+  }
+  function segment(s, k) {
+    var L = s.L, H = s.H;
+    return '<g transform="translate(' + s.x.toFixed(1) + " " + s.y.toFixed(1) + ") rotate(" + s.a.toFixed(1) + ')">' +
+      poly(NOSE, L, H, "#2b2e32") +
+      poly(WING, L, H, "#1a1c1f") + poly(mirror(WING), L, H, "#141618") +
+      '<path d="M' + (0.34 * L) + " " + (-0.5 * H) + "H" + (0.6 * L) + "L" + (0.68 * L) + " " + (-0.43 * H) + '" fill="none" stroke="#9aa1a8" stroke-width="2.5"/>' +
+      poly(BODY, L, H, "#212428") +
+      poly([[0.13, -0.26], [0.8, -0.26], [0.76, -0.08], [0.17, -0.08]], L, H, "#30343a") +
+      '<path d="M' + (0.12 * L) + " " + (-0.26 * H) + "H" + (0.8 * L) + "L" + (0.9 * L) + " " + (-0.22 * H) + "H" + L + '" fill="none" stroke="#a7aeb5" stroke-width="2.5"/>' +
+      '<path d="M' + (0.1 * L) + " 0H" + (0.82 * L) + '" stroke="#0c0d0f" stroke-width="3"/>' +
+      '<path d="M' + (0.46 * L) + " " + (-0.26 * H) + "V" + (0.26 * H) + '" stroke="#0c0d0f" stroke-width="2"/>' +
+      '<circle cx="' + (0.48 * L) + '" cy="' + (-0.4 * H) + '" r="' + (0.05 * H) + '" fill="none" stroke="#5b6168" stroke-width="2" stroke-dasharray="5 4"/>' +
+      '<circle cx="' + (0.48 * L) + '" cy="' + (0.4 * H) + '" r="' + (0.05 * H) + '" fill="none" stroke="#5b6168" stroke-width="2" stroke-dasharray="5 4"/>' +
+      poly([[0.9, -0.22], [1, -0.22], [1, 0.22], [0.9, 0.22]], L, H, "#101113") +
+      '<rect class="win" style="--k:' + k + '" x="' + (0.925 * L) + '" y="' + (-0.15 * H) + '" width="' + (0.05 * L) + '" height="' + (0.3 * H) + '"/>' +
+      (k === 0 ? '<circle cx="' + (0.3 * L) + '" cy="' + (0.13 * H) + '" r="' + (0.035 * H) + '" fill="#101113" stroke="#ff2a2a" stroke-width="2"/>' : "") +
+      glow(L, H, k) + "</g>";
+  }
+
+  // Base housing: speaker slots, a status light and the charge port.
+  var b = { x: x, y: y, a: a, L: L * 1.6, H: H * 1.1 };
+  var house = '<g transform="translate(' + b.x.toFixed(1) + " " + b.y.toFixed(1) + ") rotate(" + b.a.toFixed(1) + ')">' +
+    poly([[-0.12, -0.11], [0, -0.15], [0, 0.15], [-0.12, 0.11]], b.L, b.H, "#2b2e32") +
+    poly([[0, -0.36], [0.08, -0.46], [0.86, -0.46], [1, -0.32], [1, 0.32], [0.86, 0.46], [0.08, 0.46], [0, 0.36]], b.L, b.H, "#1d2023") +
+    poly([[0.08, -0.46], [0.86, -0.46], [0.8, -0.2], [0.13, -0.2]], b.L, b.H, "#2c3035") +
+    '<path d="M' + (0.08 * b.L) + " " + (-0.46 * b.H) + "H" + (0.86 * b.L) + "L" + b.L + " " + (-0.32 * b.H) + '" fill="none" stroke="#a7aeb5" stroke-width="2.5"/>' +
+    [0, 1, 2, 3, 4].map(function (j) {
+      return '<rect x="' + ((0.5 + j * 0.07) * b.L).toFixed(1) + '" y="' + (-0.12 * b.H) + '" width="' + (0.03 * b.L) + '" height="' + (0.3 * b.H) + '" fill="#0a0b0c"/>';
+    }).join("") +
+    '<path d="M' + (0.4 * b.L) + " " + (-0.46 * b.H) + "V" + (0.46 * b.H) + '" stroke="#0c0d0f" stroke-width="2"/>' +
+    '<rect x="' + (0.16 * b.L) + '" y="' + (-0.1 * b.H) + '" width="' + (0.16 * b.L) + '" height="' + (0.24 * b.H) + '" fill="#141619" stroke="#3a3f45" stroke-width="2"/>' +
+    '<rect class="stat" x="' + (0.2 * b.L) + '" y="' + (0.24 * b.H) + '" width="10" height="10" fill="#3dff5a"/>' +
+    '<rect x="' + (0.975 * b.L) + '" y="' + (-0.07 * b.H) + '" width="7" height="' + (0.14 * b.H) + '" fill="#0a0b0c"/>' +
+    "</g>";
+
+  // Neck end: T-piece and the rod that enters the top vertebra.
+  var s0 = segs[0], r0 = s0.a * Math.PI / 180;
+  var tx = s0.x - Math.cos(r0) * 150, ty = s0.y - Math.sin(r0) * 150;
+  var neck = '<g transform="translate(' + tx.toFixed(1) + " " + ty.toFixed(1) + ") rotate(" + s0.a + ')">' +
+    '<path d="M0 0H' + 120 + '" stroke="#8a9097" stroke-width="12"/>' +
+    '<rect x="96" y="-14" width="18" height="28" fill="#2b2e32" stroke="#a7aeb5" stroke-width="2"/>' +
+    '<path d="M-22 -128H6L22 -112V112L6 128H-22Z" fill="#212428"/>' +
+    '<path d="M-22 -128H6L22 -112" fill="none" stroke="#a7aeb5" stroke-width="2.5"/>' +
+    '<path d="M-22 -128H6V128H-22Z" fill="#2c3035"/></g>';
+
+  var axis = segs.map(function (s) { return s.x.toFixed(0) + " " + s.y.toFixed(0); }).join("L");
+  var out = '<path d="M' + axis + "L" + b.x.toFixed(0) + " " + b.y.toFixed(0) + '" fill="none" stroke="rgba(242,240,235,.14)" stroke-width="1.5" stroke-dasharray="12 8"/>' + house;
+  for (var j = segs.length - 1; j >= 0; j--) out += segment(segs[j], j);
+  return '<svg class="spine" viewBox="0 0 1600 900" aria-hidden="true" focusable="false">' + neck + out + "</svg>";
+}
+
+// Engage runs the spine's activation sequence on the page, in the four
+// states the firmware will use: the LEDs charge from the base up, time
+// slows while afterimages trail the spine, then it cools down.
+function buildEngage(fig) {
+  var STATES = [["idle", "Idle"], ["charging", "Charging"], ["active", "Active"], ["cooldown", "Cooldown"]];
+  var TIME = { charging: 700, active: 2800, cooldown: 1600 };
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var ctl = el("div", "sandy-ctl");
+  var go = el("button", "btn btn-primary sandy-go", "Engage");
+  go.type = "button";
+  var sound = el("button", "bd-btn sandy-sound", "Sound on");
+  sound.type = "button";
+  sound.setAttribute("aria-pressed", "true");
+  var list = el("ol", "sandy-states");
+  list.setAttribute("aria-hidden", "true");
+  var items = STATES.map(function (s) { return list.appendChild(el("li", null, s[1])); });
+  var status = el("span", "sandy-status", "Idle");
+  status.setAttribute("role", "status");
+  var clock = el("span", "sandy-clock", "Time x1.00");
+  clock.setAttribute("aria-hidden", "true");
+  ctl.appendChild(go);
+  ctl.appendChild(list);
+  ctl.appendChild(status);
+  ctl.appendChild(clock);
+  ctl.appendChild(sound);
+  var note = el("p", "sandy-note", "A preview of the activation state machine the spine's firmware will run.");
+  fig.parentNode.insertBefore(note, fig.nextSibling);
+  fig.parentNode.insertBefore(ctl, note);
+  var veil = el("div", "sandy-veil");
+  veil.setAttribute("aria-hidden", "true");
+  document.body.appendChild(veil);
+  var tr = fig.querySelector(".hud .tr");
+  var ready = tr ? tr.textContent : "";
+
+  var ctx = null;
+  function tone(kind) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (sound.getAttribute("aria-pressed") !== "true" || !AC) return;
+    ctx = ctx || new AC();
+    var t = ctx.currentTime, o = ctx.createOscillator(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    var len = { charging: 0.7, active: 0.9, cooldown: 0.45 }[kind];
+    var from = { charging: 110, active: 900, cooldown: 320 }[kind], to = { charging: 720, active: 60, cooldown: 140 }[kind];
+    o.type = kind === "cooldown" ? "triangle" : "sawtooth";
+    o.frequency.setValueAtTime(from, t);
+    o.frequency.exponentialRampToValueAtTime(to, t + len);
+    f.type = "lowpass";
+    f.frequency.value = 1600;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.06, t + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+    o.connect(f); f.connect(g); g.connect(ctx.destination);
+    o.start(t);
+    o.stop(t + len + 0.05);
+  }
+
+  var state = "idle", raf = 0;
+  function set(next) {
+    state = next;
+    STATES.forEach(function (s, i) {
+      fig.classList.toggle("is-" + s[0], s[0] === next && next !== "idle");
+      items[i].classList.toggle("is-on", s[0] === next);
+    });
+    document.documentElement.classList.toggle("is-sandy", next === "active");
+    go.setAttribute("aria-disabled", next === "idle" ? "false" : "true");
+    status.textContent = STATES.filter(function (s) { return s[0] === next; })[0][1];
+    if (tr) tr.textContent = next === "idle" ? ready : status.textContent;
+    if (next !== "idle") tone(next);
+  }
+  function slowClock() {
+    var start = performance.now();
+    (function frame(now) {
+      var t = (now - start) / 1000;
+      clock.textContent = "Time x0.10 // +" + (t * 0.1).toFixed(2) + " s";
+      if (state === "active") raf = requestAnimationFrame(frame);
+      else clock.textContent = "Time x1.00";
+    })(start);
+  }
+
+  go.addEventListener("click", function () {
+    if (state !== "idle") return;
+    set("charging");
+    setTimeout(function () {
+      set("active");
+      if (!calm) slowClock();
+      setTimeout(function () {
+        cancelAnimationFrame(raf);
+        set("cooldown");
+        clock.textContent = "Time x1.00";
+        setTimeout(function () { set("idle"); }, TIME.cooldown);
+      }, TIME.active);
+    }, TIME.charging);
+  });
+  sound.addEventListener("click", function () {
+    var on = sound.getAttribute("aria-pressed") !== "true";
+    sound.setAttribute("aria-pressed", on ? "true" : "false");
+    sound.textContent = on ? "Sound on" : "Sound off";
+  });
+  set("idle");
+}
+
 // Builds the braindance viewer from a project's .decision blocks and puts
 // it where the first one was. Scrubbing glitches the frame, the play
 // button steps through every stop, and Thermal recolors the frames.
@@ -387,10 +567,20 @@ function buildBraindance(decisions) {
       if (tr) tr.textContent = "Scan ready";
     }
 
+    // Until the Sandevistan frames have a photo, they show the concept
+    // diagram instead of an empty placeholder.
+    document.querySelectorAll(".sandy.media--placeholder").forEach(function (m) {
+      m.insertAdjacentHTML("afterbegin", spineSVG());
+      m.classList.add("has-diagram");
+      var tag = m.querySelector(".media__tag"), desc = m.querySelector(".media__desc");
+      if (tag) tag.textContent = "Concept diagram";
+      if (desc) desc.textContent = "Build photo coming";
+    });
+
     // Sandevistan afterimages: colored ghost copies that trail the image
     // on hover, like the time-slow effect.
     document.querySelectorAll(".sandy").forEach(function (m) {
-      var src = m.querySelector("img, video, .media__frame");
+      var src = m.querySelector("img, video, svg.spine, .media__frame");
       if (!src) return;
       for (var i = 3; i >= 1; i--) {
         var g = src.cloneNode(true);
@@ -401,6 +591,8 @@ function buildBraindance(decisions) {
         m.insertBefore(g, src);
       }
     });
+    var sandy = document.querySelector(".media--target.sandy");
+    if (sandy) buildEngage(sandy);
 
     // Braindance build log: the "Design decisions" become stops on a
     // scrubbable timeline. Each stop shows the <figure> inside its
