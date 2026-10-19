@@ -1,6 +1,6 @@
 // Shard slot transition. A click on any link to hardware.html or
 // software.html leaves a note in sessionStorage; the page it opens reads the
-// note before first paint and plays the animation (styles.css, "Shard slot").
+// note before first paint and plays the transition (styles.css, "Shard slot").
 (function () {
   var root = document.documentElement;
   var SLOT_LINK = /(^|\/)(hardware|software)\.html$/;
@@ -94,10 +94,14 @@
       // Shot A: macro of the connector drifting toward the port, which sits
       // out of focus behind it.
       '<g class="shot shot-a">' + WALL("#1b2423") +
-        '<g filter="url(#fx-dof)">' +
-          '<path d="M-10-10H150C164 80 168 140 166 200 164 270 156 320 146 370H-10Z" fill="#6a5b5f"/>' +
-          '<path d="M-10-10H90C102 90 104 180 98 370H-10Z" fill="#3e3238"/>' +
-          '<rect x="140" y="150" width="30" height="62" rx="4" fill="#20252a"/>' +
+        // The same neck as shot B, shifted left and out of focus.
+        '<g filter="url(#fx-dof)"><g transform="translate(-200 0)">' +
+          '<path d="' + WALL_PATH + '" fill="#8c7773"/>' +
+          '<path d="M238-10H340L352 370H254Z" fill="#b39d95"/>' +
+          '<path d="M320-10H340L352 370H334Z" fill="#c8b2a8"/>' +
+          '<path d="M-10-10H341L342 30 300 44 180 52-10 46Z" fill="#3e3132"/>' +
+          '<path d="' + BEZEL_PATH + '" fill="#2b3036"/>' +
+        '</g>' +
           '<circle cx="520" cy="70" r="16" fill="#3f8a87" opacity=".35"/><circle cx="580" cy="300" r="22" fill="#3f8a87" opacity=".25"/><circle cx="450" cy="320" r="10" fill="#c4404e" opacity=".3"/>' +
         '</g>' +
         '<g class="a-shard"><g transform="translate(250 184) rotate(-90) scale(2.6)">' + SHARD +
@@ -130,7 +134,8 @@
         '<path d="M338 158H354V202H338Z" fill="#1c2024" stroke="#0e0c10" stroke-width=".8"/>' +
         '<rect class="b-lip" x="359.4" y="159" width="2.4" height="42" fill="#3a3f45"/>' +
         // Loose hair falling into frame from above.
-        '<g fill="#0c1115"><path d="M150-10C176 40 186 96 176 160 172 110 160 50 128-10Z"/><path d="M196-10C214 30 222 74 218 120 210 80 198 40 178-10Z"/><path d="M90-10C110 50 116 110 104 180 100 120 90 60 66-10Z"/></g>' +        '<rect class="b-red" width="640" height="360" fill="url(#fx-flare)"/>' +
+        '<g fill="#0c1115"><path d="M150-10C176 40 186 96 176 160 172 110 160 50 128-10Z"/><path d="M196-10C214 30 222 74 218 120 210 80 198 40 178-10Z"/><path d="M90-10C110 50 116 110 104 180 100 120 90 60 66-10Z"/></g>' +
+        '<rect class="b-red" width="640" height="360" fill="url(#fx-flare)"/>' +
         '<rect width="640" height="360" fill="url(#fx-vig)"/>' +
       '</g></g>' +
       // Impact frames: one poster-white frame, one inverted.
@@ -141,11 +146,19 @@
     '<div class="slot-fx__bars"><i></i><i></i><i></i><i></i><i></i></div>' +
     '<div class="slot-fx__title"><p class="slot-fx__text"><span>' + label + '</span> // shard loaded</p></div>';
 
+  // The full sequence plays once per visit; later arrivals get a quick
+  // red slash wipe so repeat readers aren't kept waiting.
+  var seen = false;
+  try {
+    seen = sessionStorage.getItem("slotSeen") === "1";
+    sessionStorage.setItem("slotSeen", "1");
+  } catch (e) {}
+
   document.addEventListener("DOMContentLoaded", function () {
     var fx = document.createElement("div");
-    fx.className = "slot-fx";
+    fx.className = seen ? "slot-fx slot-fx--quick" : "slot-fx";
     fx.setAttribute("aria-hidden", "true");
-    fx.innerHTML = SCENE;
+    fx.innerHTML = seen ? '<div class="slot-wipe"></div>' : SCENE;
     document.body.appendChild(fx);
     root.classList.remove("is-slotting");
 
@@ -158,7 +171,7 @@
     });
     fx.addEventListener("click", done);
     document.addEventListener("keydown", done);
-    setTimeout(done, 3500);
+    setTimeout(done, 2600);
   });
 })();
 
