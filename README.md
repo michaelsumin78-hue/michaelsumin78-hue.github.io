@@ -6,8 +6,12 @@ so GitHub Pages serves it as is.
 ```
 index.html            home page: intro, project index, project cards, about
 projects/*.html       one page per project
-assets/styles.css     all styling, light and dark themes
-assets/site.js        theme toggle, clickable table rows, scroll fade-in
+hardware.html         Hardware & Wearables page
+software.html         Software Tools page
+404.html              themed not-found page (self-contained)
+assets/styles.css     all styling
+assets/site.js        shard transition, HUD readouts, parallax, scroll reveals
+assets/og.png         share card shown when the link is pasted into a message
 assets/favicon.svg
 media/                put your photos and videos here (create it)
 ```
@@ -65,3 +69,10 @@ under 10 MB so pages load fast.
 The site goes live at `https://<your-username>.github.io` within a minute or
 two. For a custom domain, buy one and add it under Settings > Pages > Custom
 domain.
+
+## Photo treatment
+
+Add `media--ink` to a figure's class to render its photo in high-contrast
+black and white, the poster look. Use it on build shots, not on the About
+photo of you. Each project's main image gets HUD readouts automatically
+from the page title and its first three tags.

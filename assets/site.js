@@ -207,7 +207,43 @@
       });
     });
 
-    // Fade sections in as they scroll into view.
+    // HUD readouts on a project's main image: its name, and its first tags.
+    var target = document.querySelector(".media--target");
+    var title = document.querySelector(".project-hero h1");
+    if (target && title) {
+      var tags = Array.prototype.slice.call(document.querySelectorAll(".project-hero .tags li"), 0, 3)
+        .map(function (li) { return li.textContent; }).join(" / ");
+      var hud = document.createElement("figcaption");
+      hud.className = "hud";
+      hud.setAttribute("aria-hidden", "true");
+      [["tl", "Target // " + title.textContent], ["tr", "Lock"], ["br", tags]].forEach(function (p) {
+        var s = document.createElement("span");
+        s.className = p[0];
+        s.textContent = p[1];
+        hud.appendChild(s);
+      });
+      target.appendChild(hud);
+    }
+
+    // The home page's red shards and crosshair drift at different speeds
+    // as the page scrolls.
+    var burst = document.querySelector(".hero-burst");
+    var reticle = document.querySelector(".hero-reticle");
+    if (burst && reticle && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var ticking = false;
+      window.addEventListener("scroll", function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          var y = window.scrollY;
+          burst.style.transform = "translateY(" + (y * -0.12) + "px)";
+          reticle.style.transform = "translateY(" + (y * 0.06) + "px)";
+          ticking = false;
+        });
+      }, { passive: true });
+    }
+
+    // Fade sections in, and cut images open, as they scroll into view.
     var items = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window)) {
       items.forEach(function (el) { el.classList.add("is-in"); });
@@ -216,11 +252,16 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
+          entry.target.classList.add(entry.target.classList.contains("cut") ? "is-cut" : "is-in");
           io.unobserve(entry.target);
         }
       });
     }, { rootMargin: "0px 0px -8% 0px" });
     items.forEach(function (el) { io.observe(el); });
+    document.querySelectorAll(".media").forEach(function (el) {
+      if (el.closest(".hero-art")) return;
+      el.classList.add("cut");
+      io.observe(el);
+    });
   });
 })();
