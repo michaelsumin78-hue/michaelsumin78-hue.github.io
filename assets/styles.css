@@ -488,6 +488,7 @@ html.is-slotting::after { content: ""; position: fixed; inset: 0; z-index: 999; 
 .slot-fx .glint { animation: fx-glint .55s ease-in-out forwards; }
 .slot-fx .b-cam { animation: fx-shake 1.5s linear forwards; }
 .slot-fx .b-hand { animation: fx-insert 1.5s forwards; }
+.slot-fx .b-head { transform-origin: 320px 300px; animation: fx-flinch 1.5s ease-out forwards; }
 .slot-fx .b-red { opacity: 0; mix-blend-mode: screen; animation: fx-red 1.5s forwards; }
 .slot-fx .b-led { animation: fx-led 1.5s steps(1) forwards; }
 .slot-fx .grain { opacity: .16; mix-blend-mode: overlay; animation: fx-grain .24s steps(3) infinite; }
@@ -513,16 +514,22 @@ html.is-slotting::after { content: ""; position: fixed; inset: 0; z-index: 999; 
 @keyframes fx-shot-b { 0% { opacity: 0; } 36.7% { opacity: 1; } 65.3% { opacity: 0; } 72% { opacity: 1; } 78.7% { opacity: 0; } }
 @keyframes fx-imp-1 { 0% { opacity: 0; } 65.3% { opacity: 1; } 68.7% { opacity: 0; } }
 @keyframes fx-imp-2 { 0% { opacity: 0; } 68.7% { opacity: 1; } 72% { opacity: 0; } }
-@keyframes fx-push { from { transform: scale(1) rotate(0); } to { transform: scale(1.07) rotate(-1deg); } }
+@keyframes fx-push { from { transform: scale(1); } to { transform: scale(1.03); } }
 @keyframes fx-glint {
   0% { transform: translateY(0); opacity: 0; }
   30% { opacity: .85; }
-  100% { transform: translateY(104px); opacity: 0; }
+  100% { transform: translateY(190px); opacity: 0; }
 }
 @keyframes fx-insert {
-  0%, 36.7% { transform: translate(360px, 470px) scale(1.2); animation-timing-function: cubic-bezier(.15, .75, .3, 1); }
-  56.7% { transform: translate(360px, 196px) scale(1.2); animation-timing-function: cubic-bezier(.8, 0, 1, .4); }
-  65.3%, 100% { transform: translate(360px, 133px) scale(1.2); }
+  0%, 36.7% { transform: translate(-120px, 160px); animation-timing-function: cubic-bezier(.15, .75, .3, 1); }
+  58% { transform: translate(-8px, 11px); animation-timing-function: cubic-bezier(.8, 0, 1, .4); }
+  65.3%, 100% { transform: translate(0, 0); }
+}
+/* The head flinches away from the port on impact. */
+@keyframes fx-flinch {
+  0%, 72% { transform: none; }
+  74% { transform: rotate(2.5deg) translate(4px, -2px); }
+  100% { transform: rotate(1.5deg) translate(2px, -1px); }
 }
 @keyframes fx-shake {
   0%, 72% { transform: none; }
