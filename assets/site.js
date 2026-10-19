@@ -18,67 +18,108 @@
     label = sessionStorage.getItem("slot");
     sessionStorage.removeItem("slot");
   } catch (e) {}
-  if (!label || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!label || location.pathname.indexOf(label + ".html") === -1) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   root.classList.add("is-slotting");
 
-  // Shard and fist share local coordinates: pins at (0, 0), shard pointing up.
+  // Drawn as lit silhouettes in the show's style: hard cel shadows, red light
+  // from the shard, teal rim light, no outlines. The shard and fist share
+  // local coordinates with the shard's pins at (0, 0), pointing up.
+  var SHARD_PATH = "M-17 22H17V176L12 182H-12L-17 176Z";
   var SHARD =
-    '<rect x="-13" y="0" width="26" height="14" fill="#a9afb4" stroke="#111" stroke-width="1.5"/>' +
-    '<path d="M-7 1v8M-1 1v8M5 1v8" stroke="#111" stroke-width="2"/>' +
-    '<rect x="-16" y="14" width="32" height="8" fill="#3a0a0e"/>' +
-    '<path d="M-17 22H17V176L12 182H-12L-17 176Z" fill="url(#fx-shard)" stroke="#111" stroke-width="2"/>' +
-    '<path d="M-6 34V70L4 80V112L-4 120V136M6 30V58L-2 66" fill="none" stroke="#e0a845" stroke-width="1.6"/>' +
-    '<path d="M-12 26V134" stroke="#ff8a8f" stroke-width="2" opacity=".55"/>' +
-    '<rect x="-18" y="138" width="36" height="20" fill="#2a070a" stroke="#111" stroke-width="2"/>';
+    '<path d="' + SHARD_PATH + '" fill="#ff2a3a" filter="url(#fx-glow)" opacity=".85"/>' +
+    '<rect x="-13" y="0" width="26" height="14" fill="#8d969d"/><rect x="-13" y="0" width="26" height="3" fill="#dfe6ea"/>' +
+    '<path d="M-7 3v9M-1 3v9M5 3v9" stroke="#2a3036" stroke-width="2"/>' +
+    '<rect x="-16" y="14" width="32" height="8" fill="#1a0508"/>' +
+    '<path d="' + SHARD_PATH + '" fill="url(#fx-shard)"/>' +
+    '<path d="M-6 34V70L4 80V112L-4 120V136M6 30V58L-2 66" fill="none" stroke="#ffc35a" stroke-width="1.4"/>' +
+    '<path d="M-13 26V134" stroke="#ffd0c8" stroke-width="1.5"/>' +
+    '<rect x="-18" y="138" width="36" height="20" fill="#16060a"/><path d="M-18 138H18" stroke="#ff6b6b"/>';
   var FIST =
-    '<path d="M-40 236-34 320H66L72 250Z" fill="#a9ada3" stroke="#111" stroke-width="2.5"/>' +
-    '<path d="M-10 140C20 128 60 136 72 170 82 198 80 236 70 262H-30Z" fill="#b9bcb2" stroke="#111" stroke-width="2.5"/>' +
-    '<path d="M44 150C62 168 70 200 66 240" stroke="#8d9187" stroke-width="5" fill="none"/>' +
-    '<rect x="-44" y="220" width="54" height="26" rx="12" fill="#cdd0c6" stroke="#111" stroke-width="2.5"/>' +
-    '<rect x="-50" y="194" width="64" height="30" rx="14" fill="#d6d9cf" stroke="#111" stroke-width="2.5"/>' +
-    '<rect x="-52" y="166" width="68" height="32" rx="15" fill="#d6d9cf" stroke="#111" stroke-width="2.5"/>' +
-    '<rect x="-48" y="138" width="66" height="32" rx="15" fill="#dcdfd5" stroke="#111" stroke-width="2.5"/>' +
-    '<path d="M-40 154c3-5 8-7 12-6M-44 182c3-5 8-7 12-6M-42 209c3-5 8-7 12-6M-36 233c3-4 7-6 10-5" stroke="#111" stroke-width="1.5" fill="none"/>' +
-    '<path d="M74 180C64 152 38 140 12 142-2 143-4 158 6 162 26 168 42 182 48 202Z" fill="#e2e4dc" stroke="#111" stroke-width="2.5"/>' +
-    '<path d="M8 147C14 146 19 149 20 155" stroke="#111" stroke-width="1.5" fill="none"/>';
-  var WALL =
-    '<rect width="640" height="360" fill="#1d2124"/>' +
-    '<rect width="640" height="360" filter="url(#fx-grime)"/>' +
-    '<rect width="640" height="360" fill="url(#fx-vig)"/>';
+    '<use href="#fx-fist" fill="#0c1115"/>' +
+    '<use href="#fx-fist" fill="url(#fx-redfall)"/>' +
+    '<path d="M-50 168H14M-48 196H12M-42 222H8" stroke="#22303a" stroke-width="1.2"/>' +
+    '<path d="M-34 139H4M-40 167H2M-38 195H0M-32 221H-2M14 142C38 140 62 152 72 176M-10 140C20 129 50 132 64 150" stroke="#ff4d4d" stroke-width="2" fill="none" stroke-linecap="round"/>';
+
+  // Radiating impact lines around the neck port, Trigger-style.
+  function rays(cx, cy) {
+    var d = "";
+    for (var i = 0; i < 40; i++) {
+      var a = i / 40 * Math.PI * 2 + Math.sin(i * 12.9898) * 0.06;
+      var r1 = 70 + (Math.sin(i * 78.233) * 0.5 + 0.5) * 90;
+      var w = 0.012 + (Math.sin(i * 39.37) * 0.5 + 0.5) * 0.02;
+      d += "M" + (cx + Math.cos(a) * r1).toFixed(1) + " " + (cy + Math.sin(a) * r1).toFixed(1) +
+        "L" + (cx + Math.cos(a - w) * 800).toFixed(1) + " " + (cy + Math.sin(a - w) * 800).toFixed(1) +
+        "L" + (cx + Math.cos(a + w) * 800).toFixed(1) + " " + (cy + Math.sin(a + w) * 800).toFixed(1) + "Z";
+    }
+    return d;
+  }
+  var RAYS = '<path class="rays" d="' + rays(360, 176) + '" fill="#fff"/>';
+  var SEATED = 'transform="translate(360 133) scale(1.2)"';
+  function impact(bg, neck, fist) {
+    return '<rect width="640" height="360" fill="' + bg + '"/>' +
+      '<use href="#fx-neck" fill="' + neck + '"/><use href="#fx-hair" fill="' + neck + '"/>' +
+      '<g clip-path="url(#fx-slit)"><path ' + SEATED + ' d="' + SHARD_PATH + '" fill="#ff2a3a"/></g>' +
+      '<g ' + SEATED + '><use href="#fx-fist" fill="' + fist + '"/></g>' + RAYS;
+  }
 
   var SCENE =
     '<svg class="slot-fx__scene" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid slice">' +
       '<defs>' +
-        '<filter id="fx-grime" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="4" seed="8"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.5 0 0 0 -0.5"/></filter>' +
+        '<filter id="fx-grime" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="4" seed="8"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.4 0 0 0 -0.5"/></filter>' +
         '<filter id="fx-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/><feColorMatrix type="saturate" values="0"/></filter>' +
-        '<radialGradient id="fx-vig" cx="50%" cy="45%" r="70%"><stop offset="45%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".85"/></radialGradient>' +
-        '<linearGradient id="fx-shard" x1="0" x2="1"><stop offset="0" stop-color="#5e0f15"/><stop offset=".25" stop-color="#c73039"/><stop offset=".6" stop-color="#9a1d25"/><stop offset="1" stop-color="#4a0a10"/></linearGradient>' +
+        '<filter id="fx-glow" x="-200%" y="-50%" width="500%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>' +
+        '<radialGradient id="fx-teal" cx="15%" cy="10%" r="80%"><stop offset="0" stop-color="#3f8a87" stop-opacity=".45"/><stop offset="1" stop-color="#3f8a87" stop-opacity="0"/></radialGradient>' +
+        '<radialGradient id="fx-vig" cx="50%" cy="45%" r="70%"><stop offset="40%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".9"/></radialGradient>' +
+        '<radialGradient id="fx-flare" cx="56%" cy="49%" r="60%"><stop offset="0" stop-color="#ff2a3a" stop-opacity=".9"/><stop offset=".5" stop-color="#ff2a3a" stop-opacity=".25"/><stop offset="1" stop-color="#ff2a3a" stop-opacity="0"/></radialGradient>' +
+        '<linearGradient id="fx-shard" x1="0" x2="1"><stop offset="0" stop-color="#6e0a14"/><stop offset=".35" stop-color="#ff3b47"/><stop offset=".6" stop-color="#d81f2c"/><stop offset="1" stop-color="#5a0610"/></linearGradient>' +
+        '<linearGradient id="fx-redfall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2a3a" stop-opacity=".55"/><stop offset=".35" stop-color="#ff2a3a" stop-opacity="0"/></linearGradient>' +
         '<clipPath id="fx-slit"><rect x="-100" y="176" width="840" height="400"/></clipPath>' +
+        '<g id="fx-fist"><path d="M-40 236-34 320H66L72 250Z"/><path d="M-10 140C20 128 60 136 72 170 82 198 80 236 70 262H-30Z"/>' +
+          '<rect x="-44" y="220" width="54" height="26" rx="12"/><rect x="-50" y="194" width="64" height="30" rx="14"/>' +
+          '<rect x="-52" y="166" width="68" height="32" rx="15"/><rect x="-48" y="138" width="66" height="32" rx="15"/>' +
+          '<path d="M74 180C64 152 38 140 12 142-2 143-4 158 6 162 26 168 42 182 48 202Z"/></g>' +
+        '<path id="fx-neck" d="M150-10H660V370H120C150 300 170 230 170 170 170 110 150 50 150-10Z"/>' +
+        '<path id="fx-hair" d="M470-10H660V210L622 120 606 196 590 100 572 150 560 40 542 92 522 18 502 62Z"/>' +
       '</defs>' +
-      // Shot A: insert shot of the fist holding the shard up, slow push-in.
-      '<g class="shot shot-a">' + WALL +
-        '<g class="a-cam"><g transform="translate(318 40) rotate(-5)">' + SHARD +
-          '<rect class="glint" x="-17" y="24" width="34" height="10" fill="#fff" opacity="0"/>' + FIST +
+      // Shot A: insert shot of the fist holding up the glowing shard.
+      '<g class="shot shot-a">' +
+        '<rect width="640" height="360" fill="#0f1a1b"/><rect width="640" height="360" filter="url(#fx-grime)"/>' +
+        '<rect width="640" height="360" fill="url(#fx-teal)"/>' +
+        '<g class="a-cam"><g transform="translate(318 52) rotate(-8) scale(.95)">' + SHARD +
+          '<rect class="glint" x="-17" y="24" width="34" height="8" fill="#fff" opacity="0"/>' + FIST +
         '</g></g>' +
+        '<rect width="640" height="360" fill="url(#fx-vig)"/>' +
       '</g>' +
-      // Shot B: close-up of the side of the neck; the shard rises into the port.
-      '<g class="shot shot-b"><g class="b-cam">' + WALL +
-        '<path d="M150-10H660V370H120C150 300 170 230 170 170 170 110 150 50 150-10Z" fill="#c4c7bd" stroke="#111" stroke-width="2.5"/>' +
-        '<path d="M150-10C190 60 260 110 360 120 420 124 470 110 500 90V-10Z" fill="#d3d6cc" stroke="#111" stroke-width="2.5"/>' +
-        '<path d="M175 70C220 120 290 158 370 162 420 164 470 152 500 132V120C470 138 430 148 380 146 300 140 220 100 170 40Z" fill="#9ca095"/>' +
-        '<path d="M520 140C470 200 420 270 380 370" stroke="#8f9389" stroke-width="3" fill="none"/>' +
-        '<path d="M500 20C540 0 590 20 590 70 590 110 560 130 535 128 520 126 515 110 520 98 530 80 512 64 500 70Z" fill="#d3d6cc" stroke="#111" stroke-width="2.5"/>' +
-        '<path d="M535 40C560 40 572 62 566 86M545 60C552 66 552 80 546 88" stroke="#111" stroke-width="2" fill="none"/>' +
-        '<path d="M470-10H660V210L622 120 606 196 590 100 572 150 560 40 542 92 522 18 502 62Z" fill="#15191c"/>' +
-        '<rect x="326" y="164" width="68" height="26" rx="6" fill="#6f757a" stroke="#111" stroke-width="2.5"/>' +
-        '<rect x="336" y="172" width="48" height="8" rx="2" fill="#050505"/>' +
-        '<circle cx="332" cy="177" r="2.5" fill="#2a2d30"/><circle cx="388" cy="177" r="2.5" fill="#2a2d30"/>' +
-        '<circle class="b-led" cx="360" cy="200" r="3.5" fill="#333"/>' +
+      // Shot B: the side of the neck lit red from below; the shard rises into the port.
+      '<g class="shot shot-b"><g class="b-cam">' +
+        '<rect width="640" height="360" fill="#0b1415"/><rect width="640" height="360" filter="url(#fx-grime)"/>' +
+        '<rect width="640" height="360" fill="url(#fx-teal)"/>' +
+        '<use href="#fx-neck" fill="#2b1a22"/>' +
+        '<path d="M150-10C190 60 260 110 360 120 420 124 470 110 500 90V-10Z" fill="#170e14"/>' +
+        '<path d="M128 370 170 212 236 196 300 206 352 222 404 252 440 300 456 370Z" fill="#a8384a"/>' +
+        '<path d="M206 370 236 262 300 236 364 246 412 292 424 370Z" fill="#d4505c"/>' +
+        '<path d="M262 266 334 246 392 272 330 262Z" fill="#ffb0a2"/>' +
+        '<path d="M300 370 318 300 352 290 336 370Z" fill="#e8707a"/>' +
+        '<path d="M520 140C470 200 420 270 380 370" stroke="#7a2632" stroke-width="2" fill="none"/>' +
+        '<path d="M150-10C190 60 260 110 360 120 420 124 470 110 500 90" stroke="#ff6b6b" stroke-width="2" fill="none"/>' +
+        '<path d="M150-10C150 50 170 110 170 170 170 230 150 300 120 370" stroke="#4fa3a0" stroke-width="2.5" fill="none"/>' +
+        '<path d="M500 20C540 0 590 20 590 70 590 110 560 130 535 128 520 126 515 110 520 98 530 80 512 64 500 70Z" fill="#170e14"/>' +
+        '<path d="M590 70C590 110 560 130 535 128" stroke="#ff6b6b" stroke-width="1.5" fill="none"/>' +
+        '<use href="#fx-hair" fill="#07090c"/><path d="M600 10 612 150M560 0 566 60" stroke="#2f5f63" stroke-width="1.5"/>' +
+        '<rect x="326" y="164" width="68" height="26" rx="6" fill="#23282e"/><path d="M332 165H388" stroke="#8b949b"/>' +
+        '<rect x="336" y="172" width="48" height="8" rx="2" fill="#000" stroke="#ff2a3a" stroke-opacity=".6"/>' +
+        '<circle class="b-led" cx="360" cy="200" r="3" fill="#3a3f45"/>' +
         '<g clip-path="url(#fx-slit)"><g class="b-hand">' + SHARD + '</g></g>' +
         '<g class="b-hand">' + FIST + '</g>' +
-        '<rect class="b-red" x="-120" y="70" width="880" height="150" fill="#ff2a2a" transform="rotate(-8 320 180)"/>' +
+        '<rect class="b-red" width="640" height="360" fill="url(#fx-flare)"/>' +
+        '<rect width="640" height="360" fill="url(#fx-vig)"/>' +
       '</g></g>' +
+      // Impact frames: one poster-white frame, one inverted.
+      '<g class="shot impact-1">' + impact("#f2f0eb", "#0a0a0a", "#f2f0eb") + '</g>' +
+      '<g class="shot impact-2">' + impact("#0a0a0a", "#f2f0eb", "#0a0a0a") + '</g>' +
       '<rect class="grain" x="-20" y="-20" width="680" height="400" filter="url(#fx-grain)"/>' +
+      '<rect width="640" height="40" fill="#000"/><rect y="320" width="640" height="40" fill="#000"/>' +
     '</svg>' +
     '<div class="slot-fx__bars"><i></i><i></i><i></i><i></i><i></i></div>' +
     '<p class="slot-fx__text"><span>' + label + '</span> // shard loaded</p>';
