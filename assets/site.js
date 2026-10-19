@@ -47,8 +47,8 @@
   // Shot B geometry: the neck's surface fills the left of frame with a port
   // bezel on its edge. The shard slides in from the right until its collar
   // meets the bezel face at x = 360.
-  var WALL_PATH = "M-10-10H318C338 60 348 120 350 180 352 240 344 300 326 370H-10Z";
-  var CONTOUR = "M318-10C338 60 348 120 350 180 352 240 344 300 326 370";
+  var WALL_PATH = "M-10-10H340L352 370H-10Z";
+  var CONTOUR = "M340-10 352 370";
   var BEZEL_PATH = "M332 150H354L360 156V204L354 210H332Z";
   var SEAT = 'transform="translate(325 180) rotate(-90) scale(1.6)"';
 
@@ -107,21 +107,21 @@
       // Shot B: the port on the neck; the shard slides in and seats.
       '<g class="shot shot-b"><g class="b-cam">' + WALL("#162021") +
         '<g filter="url(#fx-dof)"><circle cx="530" cy="80" r="28" fill="#3f8a87" opacity=".22"/><circle cx="610" cy="262" r="40" fill="#3f8a87" opacity=".16"/><circle cx="480" cy="306" r="14" fill="#c4404e" opacity=".2"/></g>' +
-        // The neck as a rounded surface: two cel tones that follow its curve,
-        // a falloff toward the far side, faint pores, a soft jaw shadow.
+        // The neck in flat cel tones with straight, hard-edged bands, faint
+        // pores, and a hard jaw shadow across the top.
         '<path d="' + WALL_PATH + '" fill="#8c7773"/>' +
-        '<path d="M232-10H318C338 60 348 120 350 180 352 240 344 300 326 370H214C236 300 248 240 248 180 248 120 242 60 232-10Z" fill="#b39d95"/>' +
-        '<path d="M300-10H318C338 60 348 120 350 180 352 240 344 300 326 370H310C328 300 334 240 334 180 334 120 324 60 300-10Z" fill="#c8b2a8"/>' +
-        '<path d="' + WALL_PATH + '" fill="url(#fx-round)"/>' +
-        '<path d="' + WALL_PATH + '" fill="#000" filter="url(#fx-pores)" opacity=".18"/>' +
-        '<path d="M150 370C176 270 214 170 270 70L290 78C236 176 200 272 178 370Z" fill="#cbbcb5" opacity=".3" filter="url(#fx-soft)"/>' +
-        '<path d="M-10-10H330C326 24 312 44 286 52 210 66 90 62-10 50Z" fill="#000" opacity=".55" filter="url(#fx-soft)"/>' +
+        '<path d="M-10-10H118L132 370H-10Z" fill="#6a5653"/>' +
+        '<path d="M238-10H340L352 370H254Z" fill="#b39d95"/>' +
+        '<path d="M320-10H340L352 370H334Z" fill="#c8b2a8"/>' +
+        '<path d="' + WALL_PATH + '" fill="#000" filter="url(#fx-pores)" opacity=".16"/>' +
+        '<path d="M-10-10H341L342 30 300 44 180 52-10 46Z" fill="#3e3132"/>' +
+        '<path d="M-10 46 180 52 300 44 342 30" fill="none" stroke="#c8b2a8" stroke-width=".8"/>' +
         '<path d="' + CONTOUR + '" fill="none" stroke="#5fb0ac" stroke-width="1.8"/>' +
         '<path class="b-rim" d="' + CONTOUR + '" fill="none" stroke="#ff4a55" stroke-width="2.4"/>' +
         // Implant panel: a beveled seam around the port.
         '<path d="M341 213H357L351 226H336Z" fill="#000" opacity=".4" filter="url(#fx-hairblur)"/>' +
-        '<path d="M352 126H310Q298 126 298 138V222Q298 234 310 234H349" fill="none" stroke="#3a2c32" stroke-width="1.1"/>' +
-        '<path d="M351 128.6H310.4Q300.6 128.6 300.6 138.4V221.6Q300.6 231.4 310.4 231.4H348.6" fill="none" stroke="#dcc8bf" stroke-width=".7" opacity=".7"/>' +
+        '<path d="M344 126H310Q298 126 298 138V222Q298 234 310 234H348" fill="none" stroke="#3a2c32" stroke-width="1.1"/>' +
+        '<path d="M344 128.6H310.4Q300.6 128.6 300.6 138.4V221.6Q300.6 231.4 310.4 231.4H347.6" fill="none" stroke="#dcc8bf" stroke-width=".7" opacity=".7"/>' +
         '<circle cx="310" cy="140" r="2.6" fill="#262b30" ' + LINE + '/><circle cx="310" cy="220" r="2.6" fill="#262b30" ' + LINE + '/>' +
         '<path d="M308 140H312M308 220H312" stroke="#8b949b" stroke-width=".7"/>' +
         '<g clip-path="url(#fx-sock)"><g class="b-shard"><g ' + SEAT + '>' + SHARD + '</g></g></g>' +
@@ -129,8 +129,8 @@
         '<path d="M334 151.5H353.5L358.5 156.5" fill="none" stroke="#a7b0b6" stroke-width="1"/>' +
         '<path d="M338 158H354V202H338Z" fill="#1c2024" stroke="#0e0c10" stroke-width=".8"/>' +
         '<rect class="b-lip" x="359.4" y="159" width="2.4" height="42" fill="#3a3f45"/>' +
-        // Loose hair falling into frame from above, slightly out of focus.
-        '<g filter="url(#fx-hairblur)" fill="#0c1115"><path d="M150-10C176 40 186 96 176 160 172 110 160 50 128-10Z"/><path d="M196-10C214 30 222 74 218 120 210 80 198 40 178-10Z"/><path d="M90-10C110 50 116 110 104 180 100 120 90 60 66-10Z"/></g>' +        '<rect class="b-red" width="640" height="360" fill="url(#fx-flare)"/>' +
+        // Loose hair falling into frame from above.
+        '<g fill="#0c1115"><path d="M150-10C176 40 186 96 176 160 172 110 160 50 128-10Z"/><path d="M196-10C214 30 222 74 218 120 210 80 198 40 178-10Z"/><path d="M90-10C110 50 116 110 104 180 100 120 90 60 66-10Z"/></g>' +        '<rect class="b-red" width="640" height="360" fill="url(#fx-flare)"/>' +
         '<rect width="640" height="360" fill="url(#fx-vig)"/>' +
       '</g></g>' +
       // Impact frames: one poster-white frame, one inverted.
