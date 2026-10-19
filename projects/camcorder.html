@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyberpunk Camcorder | Your Name</title>
+<meta name="description" content="A handheld camcorder with its own operating system. One ESP32 runs the camera and streams over Wi-Fi; a second runs the screen, menus, live effects, recording and playback.">
+<meta property="og:title" content="Cyberpunk Camcorder | Your Name">
+<meta property="og:description" content="A handheld camcorder with its own operating system. One ESP32 runs the camera and streams over Wi-Fi; a second runs the screen, menus, live effects, recording and playback.">
+<!-- EDIT: once the site is live, make this an absolute URL
+     (https://you.github.io/.../assets/og.png); some apps ignore relative ones. -->
+<meta property="og:image" content="../assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css?v=13">
+<script src="../assets/site.js?v=13"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="brand-mark">YN</span>Your Name</a>
+    <nav class="nav" aria-label="Main">
+      <a href="../hardware.html">Hardware</a>
+      <a href="../software.html">Software</a>
+      <a href="../shop.html">Shop</a>
+      <a class="nav-hide" href="../index.html#about">About</a>
+      <a class="nav-hide" href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../hardware.html">&larr; Hardware &amp; Wearables</a></p>
+  <section class="project-hero">
+    <div class="card-top"><span class="label">2026</span><span class="status status--live">Running, v9.6</span></div>
+    <h1>Cyberpunk Camcorder</h1>
+    <p class="lede">A handheld camcorder with its own operating system. One ESP32 runs the camera and streams over Wi-Fi; a second runs the screen, menus, live effects, recording and playback.</p>
+    <ul class="tags"><li>ESP32</li><li>Wi-Fi</li><li>ST7789</li><li>C++</li><li>1S LiPo</li></ul>
+    <dl class="facts"><div><dt>Role</dt><dd>Solo: firmware, wiring, enclosure</dd></div><div><dt>Timeline</dt><dd>2026, 96 versions so far</dd></div><div><dt>Tools</dt><dd>Arduino, TFT_eSPI, ESP32</dd></div><div><dt>Screen</dt><dd>320 x 240 color display</dd></div></dl>
+  </section>
+  <!-- EDIT: once the photo is in, move each scan point onto its part by
+       changing --x and --y (percent from the image's top left). -->
+  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">Camcorder in hand, screen on with the HUD showing</span></div><ul class="scan" aria-label="Parts in this image"><li style="--x:16%;--y:30%"><span><b>ESP32</b>camera + Wi-Fi</span></li><li style="--x:56%;--y:22%"><span><b>ST7789</b>320x240 display</span></li><li style="--x:26%;--y:62%"><span><b>1S LiPo</b>battery + boost</span></li></ul></figure>
+  <div class="project-body">
+    <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#design-decisions">Design decisions</a></li><li><a href="#status-and-next-steps">Status and next steps</a></li></ol></aside>
+    <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>Build a camcorder that looks and feels like a piece of cyberware: a live viewfinder with a HUD, film effects I can switch on the fly, and the ability to record, review and delete clips without a computer.</p><!-- EDIT: what made you start it, and what the enclosure looks like. --></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>Two boards.</strong> The camera board runs its own Wi-Fi access point, streams video and takes commands (capture, start and stop recording, list and delete files). The main board joins that network and does everything you see.</li><li><strong>Viewfinder.</strong> The main board decodes each JPEG frame block by block and pushes it to a 320 x 240 display, with the HUD layered on top.</li><li><strong>Effects.</strong> Scanline, bloom, VHS and neon looks, drawn into each decoded block before it reaches the screen.</li><li><strong>Controls.</strong> Three buttons drive the menus, a settings page that saves between power-ups, and a gallery for photos and video.</li><li><strong>Power.</strong> A single LiPo cell through a boost converter, with the voltage read through a divider so the OS knows how much charge is left.</li></ul></section><section id="design-decisions"><h2><span class="num">03</span>Design decisions</h2><div class="decision"><h3>Battery levels that hold still</h3><p>A LiPo sags every time the camera draws a burst of current, so a single reading jumps between levels. The OS sets each level by voltage with hysteresis: LOW at 3.70 V, CRIT at 3.50 V, EMPTY at 3.35 V, and a level only clears once the cell is 0.08 V above it, after a 20-second filter.</p></div><div class="decision"><h3>Save the clip before the battery dies</h3><p>At CRIT the camcorder stops recording on its own so the file closes cleanly. At EMPTY it shows a shutdown screen and drops into deep sleep instead of browning out and corrupting the card.</p></div><div class="decision"><h3>A HUD that never flickers</h3><p>Drawing the HUD straight onto the screen made it flash every time a video frame landed. Now it draws into an off-screen sprite and goes out in one push, and menus repaint only the rows that change.</p></div></section><section id="status-and-next-steps"><h2><span class="num">04</span>Status and next steps</h2><p>Version 9.6 is flashed and booting. Next I check every new screen on the real panel and then finish the enclosure.</p><!-- EDIT: update once you've tested v9.6 on the screen. --></section></article>
+  </div>
+</div>
+<div class="next-project">
+  <div class="wrap">
+    <a href="jarvis.html"><div><span class="label">Next project</span><h2>JARVIS Voice Assistant</h2></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</main>
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <h2>Want to see something running? Ask me.</h2>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+        <a class="btn" href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <p class="fine">Designed and built by Your Name. Every project on this site is my own work.</p>
+  </div>
+</footer>
+</body>
+</html>

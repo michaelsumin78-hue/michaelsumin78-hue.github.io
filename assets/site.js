@@ -1,9 +1,9 @@
-// Shard slot transition. A click on any link to hardware.html or
-// software.html leaves a note in sessionStorage; the page it opens reads the
+// Shard slot transition. A click on any link to hardware.html,
+// software.html or shop.html leaves a note in sessionStorage; the page it opens reads the
 // note before first paint and plays the transition (styles.css, "Shard slot").
 (function () {
   var root = document.documentElement;
-  var SLOT_LINK = /(^|\/)(hardware|software)\.html$/;
+  var SLOT_LINK = /(^|\/)(hardware|software|shop)\.html$/;
 
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[href]");

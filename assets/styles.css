@@ -241,7 +241,8 @@ p { margin: 0 0 1em; }
 
 /* ---------- Shard tiles (home page) ---------- */
 .shards { display: grid; gap: 20px; grid-template-columns: 1fr; }
-@media (min-width: 720px) { .shards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 720px) { .shards { grid-template-columns: 1fr 1fr; } .shards > :last-child:nth-child(odd) { grid-column: 1 / -1; } }
+@media (min-width: 1080px) { .shards { grid-template-columns: repeat(3, 1fr); } .shards > :last-child:nth-child(odd) { grid-column: auto; } }
 .shard-tile {
   --cut: 22px;
   display: flex; gap: 28px; align-items: center;

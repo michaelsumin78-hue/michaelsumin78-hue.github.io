@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quadruped Robot | Your Name</title>
+<meta name="description" content="A four-legged robot I&#x27;m building one leg at a time. The first test leg has three servos, for roll, hip and knee, and runs the step cycle the robot will use to turn in place.">
+<meta property="og:title" content="Quadruped Robot | Your Name">
+<meta property="og:description" content="A four-legged robot I&#x27;m building one leg at a time. The first test leg has three servos, for roll, hip and knee, and runs the step cycle the robot will use to turn in place.">
+<!-- EDIT: once the site is live, make this an absolute URL
+     (https://you.github.io/.../assets/og.png); some apps ignore relative ones. -->
+<meta property="og:image" content="../assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css?v=13">
+<script src="../assets/site.js?v=13"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><span class="brand-mark">YN</span>Your Name</a>
+    <nav class="nav" aria-label="Main">
+      <a href="../hardware.html">Hardware</a>
+      <a href="../software.html">Software</a>
+      <a href="../shop.html">Shop</a>
+      <a class="nav-hide" href="../index.html#about">About</a>
+      <a class="nav-hide" href="../index.html#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap">
+  <p class="crumb"><a href="../hardware.html">&larr; Hardware &amp; Wearables</a></p>
+  <section class="project-hero">
+    <div class="card-top"><span class="label">2026</span><span class="status status--live">In progress</span></div>
+    <h1>Quadruped Robot</h1>
+    <p class="lede">A four-legged robot I&#x27;m building one leg at a time. The first test leg has three servos, for roll, hip and knee, and runs the step cycle the robot will use to turn in place.</p>
+    <ul class="tags"><li>ESP32</li><li>MG996R servos</li><li>C++</li><li>Gait design</li></ul>
+    <dl class="facts"><div><dt>Role</dt><dd>Solo build</dd></div><div><dt>Timeline</dt><dd>Aug 2026, ongoing</dd></div><div><dt>Tools</dt><dd>ESP32, ESP32Servo</dd></div><div><dt>Stage</dt><dd>Single-leg test</dd></div></dl>
+  </section>
+  <!-- EDIT: once the photo is in, move each scan point onto its part by
+       changing --x and --y (percent from the image's top left). -->
+  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">Test leg mid-step, side view</span></div><ul class="scan" aria-label="Parts in this image"><li style="--x:16%;--y:30%"><span><b>ESP32</b>controller</span></li><li style="--x:56%;--y:22%"><span><b>MG996R servos</b>roll / hip / knee</span></li></ul></figure>
+  <div class="project-body">
+    <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#next">Next</a></li></ol></aside>
+    <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>After the biped, I wanted a robot that stands on its own without active balance, so I can focus on gait. Four legs give it a stable base; three joints per leg let it walk, turn and adjust its height.</p><!-- EDIT: check this matches why you started it. --></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>The leg.</strong> Three servos: roll swings the leg sideways, the hip lifts it, and the knee bends it.</li><li><strong>Turning in place.</strong> Each leg loops four phases. Lift the foot, swing it toward the turn while it's in the air, plant it, then push it back to center. The push turns the body, because the planted foot can't slide.</li><li><strong>Power.</strong> The servos run from a separate 5 to 6 V supply that shares ground with the ESP32. Each MG996R can pull 1.5 to 2.5 A under load, far more than the board's 5 V pin can give.</li></ul></section><section id="next"><h2><span class="num">03</span>Next</h2><p>Mount the leg, tune the joint angles to its real range of motion, then build the other three and bring over what I learned balancing the biped.</p></section></article>
+  </div>
+</div>
+<div class="next-project">
+  <div class="wrap">
+    <a href="mantis-blades.html"><div><span class="label">Next project</span><h2>Mantis Blades</h2></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
+</main>
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <h2>Want to see something running? Ask me.</h2>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:you@example.com">Email me</a>
+        <a class="btn" href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+    <p class="fine">Designed and built by Your Name. Every project on this site is my own work.</p>
+  </div>
+</footer>
+</body>
+</html>
