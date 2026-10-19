@@ -186,6 +186,7 @@ p { margin: 0 0 1em; }
 }
 .hero-burst { z-index: 0; fill: var(--accent); }
 .hero-reticle { z-index: 2; stroke: var(--yellow); }
+.hero-slashes { fill: var(--accent); stroke: none; }
 
 .btn {
   --cut: 9px;
@@ -260,6 +261,14 @@ p { margin: 0 0 1em; }
   opacity: 0; transform: scale(1.25); transition: opacity .2s, transform .25s;
 }
 .card:hover .media::after { opacity: 1; transform: none; }
+/* Red slashes cut across the photo with the crosshair: a fast left-to-right
+   wipe so they read as a cut instead of a fade. */
+.card .media::before, .media--target::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: url("slashes.svg") no-repeat center / cover;
+}
+.card .media::before { clip-path: inset(0 100% 0 0); transition: clip-path .18s ease-out; }
+.card:hover .media::before { clip-path: inset(0 0 0 0); }
 .card-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .card-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .card h3 { font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em; }
@@ -422,5 +431,5 @@ p { margin: 0 0 1em; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .card, .card .media::after, .nav a::after { transition: none; }
+  .card, .card .media::before, .card .media::after, .nav a::after { transition: none; }
 }
