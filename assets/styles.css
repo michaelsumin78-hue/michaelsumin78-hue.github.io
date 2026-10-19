@@ -464,94 +464,97 @@ p { margin: 0 0 1em; }
 
 /* ---------- Shard slot transition ---------- */
 /* Plays on arrival at the Hardware or Software page as a short cut-together
-   sequence in widescreen: an insert shot of a fist holding a glowing shard,
-   a hard cut to the neck port as the shard goes in, two impact frames, a red
-   flare, a cut to black with the section name, then a hard cut to the page.
-   Click or press a key to skip. Keyframe percentages are points in the
-   1.5 s run: 36.7% = 0.55 s (cut to the neck), 56.7% = 0.85 s (shard at
-   the port), 65.3% = 0.98 s (seated, impact frames), 72% = 1.08 s (flare),
-   78.7% = 1.18 s (cut to black). */
+   sequence of macro close-ups: the shard's connector in shallow focus, a
+   hard cut to it seating into a neck port, two impact frames, a red flare,
+   then the section name typed out on black and held before the page fades
+   in. Click or press a key to skip. Keyframe percentages are points in the
+   2.6 s run: 23% = 0.6 s (cut to the port), 34.6% = 0.9 s (shard at the
+   bezel), 38.5% = 1.0 s (seated, impact frames), 42.3% = 1.1 s (flare),
+   50% = 1.3 s (cut to black), 90.4% = 2.35 s (fade out). */
 html.is-slotting::after { content: ""; position: fixed; inset: 0; z-index: 999; background: #000; }
 .slot-fx {
   position: fixed; inset: 0; z-index: 1000; cursor: pointer; overflow: hidden;
   background: #000;
-  animation: fx-life 1.5s steps(1) forwards;
+  animation: fx-life 2.6s linear forwards;
 }
 .slot-fx__scene { position: absolute; inset: 0; width: 100%; height: 100%; }
 .slot-fx .shot { opacity: 0; }
-.slot-fx .shot-a { animation: fx-shot-a 1.5s steps(1) forwards; }
-.slot-fx .shot-b { animation: fx-shot-b 1.5s steps(1) forwards; }
-.slot-fx .impact-1 { animation: fx-imp-1 1.5s steps(1) forwards; }
-.slot-fx .impact-2 { animation: fx-imp-2 1.5s steps(1) forwards; }
+.slot-fx .shot-a { animation: fx-shot-a 2.6s steps(1) forwards; }
+.slot-fx .shot-b { animation: fx-shot-b 2.6s steps(1) forwards; }
+.slot-fx .impact-1 { animation: fx-imp-1 2.6s steps(1) forwards; }
+.slot-fx .impact-2 { animation: fx-imp-2 2.6s steps(1) forwards; }
 .slot-fx .rays { mix-blend-mode: difference; }
-.slot-fx .a-cam { transform-origin: 320px 180px; animation: fx-push .55s linear forwards; }
-.slot-fx .glint { animation: fx-glint .55s ease-in-out forwards; }
-.slot-fx .b-cam { animation: fx-shake 1.5s linear forwards; }
-.slot-fx .b-hand { animation: fx-insert 1.5s forwards; }
-.slot-fx .b-head { transform-origin: 320px 300px; animation: fx-flinch 1.5s ease-out forwards; }
-.slot-fx .b-red { opacity: 0; mix-blend-mode: screen; animation: fx-red 1.5s forwards; }
-.slot-fx .b-led { animation: fx-led 1.5s steps(1) forwards; }
-.slot-fx .grain { opacity: .16; mix-blend-mode: overlay; animation: fx-grain .24s steps(3) infinite; }
+.slot-fx .a-shard { animation: fx-drift .6s cubic-bezier(.2, .6, .4, 1) forwards; }
+.slot-fx .glint { animation: fx-glint .6s ease-in-out forwards; }
+.slot-fx .b-cam { animation: fx-shake 2.6s linear forwards; }
+.slot-fx .b-shard { animation: fx-insert 2.6s forwards; }
+.slot-fx .b-red { opacity: 0; mix-blend-mode: screen; animation: fx-red 2.6s forwards; }
+.slot-fx .b-rim { opacity: 0; animation: fx-on 2.6s steps(1) forwards; }
+.slot-fx .b-lip { animation: fx-lip 2.6s steps(1) forwards; }
+.slot-fx .grain { opacity: .14; mix-blend-mode: overlay; animation: fx-grain .24s steps(3) infinite; }
+.slot-fx__title {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  opacity: 0; animation: fx-title 2.6s steps(1) forwards;
+}
 .slot-fx__text {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  margin: 0; white-space: nowrap;
-  font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--muted); opacity: 0; animation: fx-text 1.5s steps(1) forwards;
+  margin: 0; white-space: nowrap; padding-bottom: 10px; border-bottom: 1px solid var(--accent);
+  font-family: var(--font-mono); font-size: clamp(13px, 1.6vw, 18px); letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-2);
+  clip-path: inset(0 100% 0 0); animation: fx-type 2.6s steps(24) forwards;
 }
 .slot-fx__text span { color: var(--accent); }
 .slot-fx__bars i {
-  position: absolute; left: 0; height: 6px; background: var(--accent); opacity: 0;
-  animation: fx-bar 1.5s steps(1) forwards;
+  position: absolute; left: 0; height: 5px; background: var(--accent); opacity: 0;
+  animation: fx-bar 2.6s steps(1) forwards;
 }
 .slot-fx__bars i:nth-child(1) { top: 18%; width: 46%; }
-.slot-fx__bars i:nth-child(2) { top: 34%; left: 40%; width: 60%; height: 3px; animation-name: fx-bar-b; }
-.slot-fx__bars i:nth-child(3) { top: 61%; left: 8%; width: 30%; height: 10px; }
+.slot-fx__bars i:nth-child(2) { top: 34%; left: 40%; width: 60%; height: 2px; animation-name: fx-bar-b; }
+.slot-fx__bars i:nth-child(3) { top: 61%; left: 8%; width: 30%; height: 8px; }
 .slot-fx__bars i:nth-child(4) { top: 72%; left: 52%; width: 38%; animation-name: fx-bar-b; }
 .slot-fx__bars i:nth-child(5) { top: 82%; width: 70%; height: 2px; }
 
-@keyframes fx-life { 0% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes fx-shot-a { 0% { opacity: 1; } 36.7% { opacity: 0; } }
-@keyframes fx-shot-b { 0% { opacity: 0; } 36.7% { opacity: 1; } 65.3% { opacity: 0; } 72% { opacity: 1; } 78.7% { opacity: 0; } }
-@keyframes fx-imp-1 { 0% { opacity: 0; } 65.3% { opacity: 1; } 68.7% { opacity: 0; } }
-@keyframes fx-imp-2 { 0% { opacity: 0; } 68.7% { opacity: 1; } 72% { opacity: 0; } }
-@keyframes fx-push { from { transform: scale(1); } to { transform: scale(1.03); } }
+@keyframes fx-life { 0%, 90.4% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes fx-shot-a { 0% { opacity: 1; } 23% { opacity: 0; } }
+@keyframes fx-shot-b { 0% { opacity: 0; } 23% { opacity: 1; } 38.5% { opacity: 0; } 42.3% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes fx-imp-1 { 0% { opacity: 0; } 38.5% { opacity: 1; } 40.4% { opacity: 0; } }
+@keyframes fx-imp-2 { 0% { opacity: 0; } 40.4% { opacity: 1; } 42.3% { opacity: 0; } }
+@keyframes fx-title { 0% { opacity: 0; } 50% { opacity: 1; } }
+@keyframes fx-type {
+  0%, 50% { clip-path: inset(0 100% 0 0); }
+  65%, 100% { clip-path: inset(0 0 0 0); }
+}
+@keyframes fx-drift { from { transform: translateX(60px); } to { transform: translateX(-10px); } }
 @keyframes fx-glint {
-  0% { transform: translateY(0); opacity: 0; }
-  30% { opacity: .85; }
-  100% { transform: translateY(190px); opacity: 0; }
+  0% { transform: translateX(0); opacity: 0; }
+  30% { opacity: .7; }
+  100% { transform: translateX(40px); opacity: 0; }
 }
 @keyframes fx-insert {
-  0%, 36.7% { transform: translate(-120px, 160px); animation-timing-function: cubic-bezier(.15, .75, .3, 1); }
-  58% { transform: translate(-8px, 11px); animation-timing-function: cubic-bezier(.8, 0, 1, .4); }
-  65.3%, 100% { transform: translate(0, 0); }
-}
-/* The head flinches away from the port on impact. */
-@keyframes fx-flinch {
-  0%, 72% { transform: none; }
-  74% { transform: rotate(2.5deg) translate(4px, -2px); }
-  100% { transform: rotate(1.5deg) translate(2px, -1px); }
+  0%, 23% { transform: translateX(240px); animation-timing-function: cubic-bezier(.15, .75, .3, 1); }
+  34.6% { transform: translateX(14px); animation-timing-function: cubic-bezier(.8, 0, 1, .4); }
+  38.5%, 100% { transform: translateX(0); }
 }
 @keyframes fx-shake {
-  0%, 72% { transform: none; }
-  73.3% { transform: translate(-7px, 4px); }
-  74.6% { transform: translate(6px, -3px); }
-  76% { transform: translate(-2px, 1px); }
-  77.3%, 100% { transform: none; }
+  0%, 42.3% { transform: none; }
+  43.5% { transform: translate(-7px, 4px); }
+  44.7% { transform: translate(6px, -3px); }
+  46% { transform: translate(-2px, 1px); }
+  47.2%, 100% { transform: none; }
 }
-@keyframes fx-red { 0%, 71.9% { opacity: 0; } 72% { opacity: 1; } 78.7%, 100% { opacity: .5; } }
-@keyframes fx-led { 0% { fill: #3a3f45; } 65.3% { fill: var(--green); } }
+@keyframes fx-red { 0%, 42.2% { opacity: 0; } 42.3% { opacity: 1; } 50%, 100% { opacity: .5; } }
+@keyframes fx-on { 0% { opacity: 0; } 38.5% { opacity: 1; } }
+@keyframes fx-lip { 0% { fill: #3a3f45; } 38.5% { fill: #ff2a3a; } }
 @keyframes fx-grain {
   0% { transform: translate(0, 0); }
   33% { transform: translate(-14px, 9px); }
   66% { transform: translate(10px, -12px); }
   100% { transform: translate(0, 0); }
 }
-@keyframes fx-text { 0% { opacity: 0; } 78.7% { opacity: 1; } }
 @keyframes fx-bar {
-  0% { opacity: 0; } 72% { opacity: 1; transform: translateX(0); } 74% { opacity: 0; }
-  75.5% { opacity: 1; transform: translateX(12%); } 77.5% { opacity: 0; }
+  0% { opacity: 0; } 42.3% { opacity: 1; transform: translateX(0); } 43.8% { opacity: 0; }
+  45% { opacity: 1; transform: translateX(12%); } 46.5% { opacity: 0; }
 }
 @keyframes fx-bar-b {
-  0% { opacity: 0; } 73% { opacity: 1; transform: translateX(0); } 75% { opacity: 0; }
-  76.5% { opacity: 1; transform: translateX(-9%); } 78.5% { opacity: 0; }
+  0% { opacity: 0; } 43% { opacity: 1; transform: translateX(0); } 44.5% { opacity: 0; }
+  45.8% { opacity: 1; transform: translateX(-9%); } 47.5% { opacity: 0; }
 }
