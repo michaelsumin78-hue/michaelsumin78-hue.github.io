@@ -81,7 +81,7 @@ p { margin: 0 0 1em; }
 /* ---------- Chamfered panels ---------- */
 /* Clip the top-right and bottom-left corners, then redraw the border across
    each cut with a diagonal so the outline stays continuous. */
-.card, .index-block, .facts, .decision, .btn {
+.card, .index-block, .facts, .decision, .btn, .shard-tile {
   --edge: var(--line);
   position: relative;
   border: 1px solid var(--edge);
@@ -91,13 +91,14 @@ p { margin: 0 0 1em; }
 .index-block::before, .index-block::after,
 .facts::before, .facts::after,
 .decision::before, .decision::after,
-.btn::before, .btn::after {
+.btn::before, .btn::after,
+.shard-tile::before, .shard-tile::after {
   content: ""; position: absolute; z-index: 3; pointer-events: none;
   width: var(--cut); height: var(--cut);
   background: linear-gradient(to bottom left, transparent calc(50% - 1px), var(--edge) calc(50% - 1px), var(--edge) calc(50% + 1px), transparent calc(50% + 1px));
 }
-.card::before, .index-block::before, .facts::before, .decision::before, .btn::before { top: -1px; right: -1px; }
-.card::after, .index-block::after, .facts::after, .decision::after, .btn::after { bottom: -1px; left: -1px; }
+.card::before, .index-block::before, .facts::before, .decision::before, .btn::before, .shard-tile::before { top: -1px; right: -1px; }
+.card::after, .index-block::after, .facts::after, .decision::after, .btn::after, .shard-tile::after { bottom: -1px; left: -1px; }
 
 /* ---------- Red slash dividers ---------- */
 .section, .next-project, .site-footer { position: relative; }
@@ -235,7 +236,114 @@ p { margin: 0 0 1em; }
   .section-head { grid-template-columns: 220px 1fr; gap: 40px; align-items: baseline; }
 }
 .section-head .label, .about-grid > div > .label { color: var(--accent); }
-.section-head h2 { font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; letter-spacing: 0.03em; }
+.section-head h2, .section-head h1 { font-size: clamp(32px, 4.5vw, 48px); text-transform: uppercase; letter-spacing: 0.03em; }
+.section--page h1 { font-size: clamp(40px, 6vw, 64px); }
+
+/* ---------- Shard tiles (home page) ---------- */
+.shards { display: grid; gap: 20px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .shards { grid-template-columns: 1fr 1fr; } }
+.shard-tile {
+  --cut: 22px;
+  display: flex; gap: 28px; align-items: center;
+  padding: 32px 28px; background: var(--surface); text-decoration: none;
+  transition: background .2s;
+}
+.shard-tile:hover { --edge: var(--accent); background: var(--surface-2); }
+.shard-tile__body { display: flex; flex-direction: column; gap: 10px; }
+.shard-tile h3 { font-size: clamp(26px, 3vw, 34px); text-transform: uppercase; letter-spacing: 0.03em; }
+.shard-tile p { margin: 0; color: var(--ink-2); font-size: 16px; }
+.shard-tile .more {
+  margin-top: 6px; font-family: var(--font-display); font-size: 15px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  display: inline-flex; gap: 6px; align-items: center;
+}
+.shard-tile:hover .more { color: var(--accent); }
+.shard-icon { flex: none; width: 34px; height: 90px; transition: transform .2s ease-out; }
+.shard-tile:hover .shard-icon { transform: translateY(8px); }
+.shard-icon__body { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1.5; }
+.shard-icon__core { fill: var(--accent); }
+.shard-icon__pins { stroke: #c9a24a; stroke-width: 1.5; }
+
+/* ---------- Shard slot transition ---------- */
+/* Plays on arrival at the Hardware or Software page: a shard flies in, the
+   crosshair locks onto a neck port, the shard clicks in, red bars glitch
+   across, then the overlay wipes away. Click or press a key to skip. */
+html.is-slotting::after { content: ""; position: fixed; inset: 0; z-index: 999; background: var(--bg); }
+.slot-fx {
+  position: fixed; inset: 0; z-index: 1000; cursor: pointer;
+  background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+  animation: slot-wipe 1.4s linear forwards;
+}
+.slot-fx__scene { width: min(80vw, 460px); height: auto; overflow: visible; animation: slot-shake 1.4s linear; }
+.slot-fx .neck { fill: var(--paper); }
+.slot-fx .hatch { stroke: #8a8884; stroke-width: 2; fill: none; }
+.slot-fx .hair { fill: #1c1c1c; }
+.slot-fx .strands { fill: none; stroke: #555; stroke-width: 2; }
+.slot-fx .spine { stroke: #8a8884; stroke-width: 3; stroke-linecap: square; }
+.slot-fx .port-rim { fill: var(--bg); stroke: var(--accent); stroke-width: 3; animation: slot-port 1.4s steps(1) forwards; }
+.slot-fx .port-led { fill: #444; animation: slot-led 1.4s steps(1) forwards; }
+.slot-fx .reticle { fill: none; stroke: var(--yellow); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: slot-lock 1.4s ease-out forwards; }
+.slot-fx .shard { transform-box: fill-box; transform-origin: 50% 100%; animation: slot-insert 1.4s forwards; }
+.slot-fx .shard-body { fill: var(--surface-2); stroke: var(--ink); stroke-width: 1; }
+.slot-fx .shard-core { fill: var(--accent); }
+.slot-fx .shard-pins { stroke: #c9a24a; stroke-width: 1.5; }
+.slot-fx__text {
+  margin: 0; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted); opacity: 0; animation: slot-text 1.4s steps(1) forwards;
+}
+.slot-fx__text span { color: var(--accent); }
+.slot-fx__bars i {
+  position: absolute; left: 0; height: 6px; background: var(--accent); opacity: 0;
+  animation: slot-bar 1.4s steps(1) forwards;
+}
+.slot-fx__bars i:nth-child(1) { top: 18%; width: 46%; }
+.slot-fx__bars i:nth-child(2) { top: 34%; left: 40%; width: 60%; height: 3px; animation-name: slot-bar-b; }
+.slot-fx__bars i:nth-child(3) { top: 61%; left: 8%; width: 30%; height: 10px; }
+.slot-fx__bars i:nth-child(4) { top: 72%; left: 52%; width: 38%; animation-name: slot-bar-b; }
+.slot-fx__bars i:nth-child(5) { top: 86%; width: 70%; height: 2px; }
+
+@keyframes slot-insert {
+  0%   { transform: translate(150px, -170px) rotate(38deg); opacity: 0; animation-timing-function: cubic-bezier(.3, .5, .35, 1); }
+  6%   { opacity: 1; }
+  36%  { transform: translate(0, -34px) rotate(0); }
+  44%  { transform: translate(0, -34px) rotate(0); animation-timing-function: cubic-bezier(.7, 0, 1, .6); }
+  52%  { transform: translate(0, 0) rotate(0); }
+  100% { transform: translate(0, 0) rotate(0); opacity: 1; }
+}
+@keyframes slot-lock {
+  0%   { opacity: 0; transform: scale(1.8) rotate(-45deg); }
+  30%  { opacity: 1; transform: scale(1) rotate(0); }
+  52%  { opacity: 1; transform: scale(1) rotate(0); }
+  60%  { opacity: 0; transform: scale(.7) rotate(20deg); }
+  100% { opacity: 0; }
+}
+@keyframes slot-port {
+  0%   { fill: var(--bg); }
+  52%  { fill: var(--accent); stroke: var(--yellow); }
+  58%  { fill: var(--bg); stroke: var(--accent); }
+}
+@keyframes slot-led { 0% { fill: #444; } 54% { fill: var(--green); } }
+@keyframes slot-shake {
+  0%, 52% { transform: none; }
+  54% { transform: translate(-4px, 3px); }
+  56% { transform: translate(4px, -2px); }
+  58% { transform: translate(-2px, 1px); }
+  60%, 100% { transform: none; }
+}
+@keyframes slot-bar {
+  0% { opacity: 0; } 54% { opacity: 1; transform: translateX(0); } 58% { opacity: 0; }
+  62% { opacity: 1; transform: translateX(14%); } 66% { opacity: 0; }
+}
+@keyframes slot-bar-b {
+  0% { opacity: 0; } 56% { opacity: 1; transform: translateX(0); } 60% { opacity: 0; }
+  64% { opacity: 1; transform: translateX(-10%); } 70% { opacity: 0; }
+}
+@keyframes slot-text { 0% { opacity: 0; } 56% { opacity: 1; } }
+@keyframes slot-wipe {
+  0%, 76% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
 .section-head p { color: var(--ink-2); max-width: 60ch; margin: 12px 0 0; }
 
 /* ---------- Project cards ---------- */
