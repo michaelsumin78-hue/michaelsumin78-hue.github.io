@@ -76,3 +76,26 @@ Add `media--ink` to a figure's class to render its photo in high-contrast
 black and white, the poster look. Use it on build shots, not on the About
 photo of you. Each project's main image gets HUD readouts automatically
 from the page title and its first three tags.
+
+## Braindance build log
+
+On each project page, the "Design decisions" become stops on a scrubbable
+timeline. To give a stop a photo, put a figure inside that `.decision`:
+
+```html
+<div class="decision">
+  <figure class="media"><img src="../media/spine-hinge-v1.jpg" alt="First chain with pin hinges"></figure>
+  <h3>Dropping pin hinges</h3>
+  <p>...</p>
+</div>
+```
+
+Stops without a figure show a placeholder. One photo per stop is plenty.
+
+## Scanner and afterimages
+
+Each project's main image carries a `<ul class="scan">` of parts. Hovering,
+focusing or tapping the image shows them. Once a real photo is in, move each
+point onto its part by editing `--x` and `--y` (percent from the top left).
+The Sandevistan images have the `sandy` class, which trails colored
+afterimages on hover.

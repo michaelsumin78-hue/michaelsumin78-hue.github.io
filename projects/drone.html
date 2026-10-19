@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles.css?v=9">
-<script src="../assets/site.js?v=9"></script>
+<link rel="stylesheet" href="../assets/styles.css?v=11">
+<script src="../assets/site.js?v=11"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -43,7 +43,9 @@
     <ul class="tags"><li>CAD</li><li>Flight electronics</li></ul>
     <dl class="facts"><div><dt>Role</dt><dd>Solo</dd></div><div><dt>Timeline</dt><dd>2026</dd></div><div><dt>Tools</dt><dd>Fusion</dd></div><div><dt>Stage</dt><dd>Concept</dd></div></dl>
   </section>
-  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">Concept sketch or first CAD render</span></div></figure>
+  <!-- EDIT: once the photo is in, move each scan point onto its part by
+       changing --x and --y (percent from the image's top left). -->
+  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">Concept sketch or first CAD render</span></div><ul class="scan" aria-label="Parts in this image"><li style="--x:16%;--y:30%"><span><b>CAD</b>airframe</span></li><li style="--x:56%;--y:22%"><span><b>Flight electronics</b>flight stack</span></li></ul></figure>
   <div class="project-body">
     <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li></ol></aside>
     <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>Design a custom drone with a Cyberpunk-styled printed body.</p><!-- EDIT: fill in from your design notes: frame size, motors, flight controller, what makes it yours. --></section></article>

@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles.css?v=9">
-<script src="../assets/site.js?v=9"></script>
+<link rel="stylesheet" href="../assets/styles.css?v=11">
+<script src="../assets/site.js?v=11"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -43,7 +43,9 @@
     <ul class="tags"><li>Python</li><li>3D geometry</li><li>Desktop app</li><li>pytest</li></ul>
     <dl class="facts"><div><dt>Role</dt><dd>Solo: design and code</dd></div><div><dt>Timeline</dt><dd>Sep 2026</dd></div><div><dt>Inputs</dt><dd>.3mf, .stl, .obj, .step</dd></div><div><dt>Tests</dt><dd>240+ automated tests</dd></div></dl>
   </section>
-  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">App window with a part shown from below, overhang faces in red</span></div></figure>
+  <!-- EDIT: once the photo is in, move each scan point onto its part by
+       changing --x and --y (percent from the image's top left). -->
+  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">App window with a part shown from below, overhang faces in red</span></div><ul class="scan" aria-label="Parts in this image"><li style="--x:16%;--y:30%"><span><b>Python</b>core</span></li><li style="--x:56%;--y:22%"><span><b>3D geometry</b>overhang check</span></li><li style="--x:26%;--y:62%"><span><b>Desktop app</b>interface</span></li></ul></figure>
   <div class="project-body">
     <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#design-decisions">Design decisions</a></li><li><a href="#results">Results</a></li></ol></aside>
     <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>I kept losing prints to the same problems: unsupported overhangs, thin walls, long bridges, and settings that do not suit the part. I wanted a tool that catches them before the printer does.</p></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>Analysis.</strong> It reads a Bambu Studio project or a raw mesh or STEP file, then flags overhang faces, thin walls, risky bridge spans and known-bad settings.</li><li><strong>Orientation.</strong> It scores rotations and suggests a better one. Each part gets a category (structural, aesthetic or mixed) with the reasons for its guess, and changing the category re-scores the part.</li><li><strong>Plate.</strong> It packs parts on the bed, recommends settings, and exports a <code>.3mf</code> that opens straight in Bambu Studio.</li><li><strong>Two front ends, one library.</strong> An interactive 3D desktop app and the original command-line tool that writes an HTML report.</li></ul><div class="media-row"><figure class="media media--placeholder" style="--ratio: 4 / 3"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Before and after: suggested orientation</span></div></figure></div></section><section id="design-decisions"><h2><span class="num">03</span>Design decisions</h2><div class="decision"><h3>View from below</h3><p>The 3D view looks at each part from slightly below the horizon. Overhang faces point down, so the usual view from above hides every face worth looking at.</p></div><div class="decision"><h3>Verify the file, not the screen</h3><p>Bambu Studio throws away a whole project over one unknown value without an error. I check every exported file with Bambu Studio&#x27;s own headless command-line mode instead of trusting that it looks right.</p></div></section><section id="results"><h2><span class="num">04</span>Results</h2><p>Packaged as a Windows app I pinned to my taskbar and use before every print. Over 240 automated tests cover the analysis.</p></section></article>
