@@ -10,7 +10,7 @@ hardware.html         Hardware & Wearables page
 software.html         Software Tools page
 404.html              themed not-found page (self-contained)
 assets/styles.css     all styling
-assets/site.js        shard transition, HUD readouts, parallax, scroll reveals
+assets/site.js        HUD readouts, parallax, scroll reveals
 assets/og.png         share card shown when the link is pasted into a message
 assets/favicon.svg
 media/                put your photos and videos here (create it)

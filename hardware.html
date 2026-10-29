@@ -11,22 +11,21 @@
      (https://you.github.io/.../assets/og.png); some apps ignore relative ones. -->
 <meta property="og:image" content="assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0a0a0a">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=13">
-<script src="assets/site.js?v=13"></script>
+<link rel="stylesheet" href="assets/styles.css?v=14">
+<script src="assets/site.js?v=14"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="index.html"><span class="brand-mark">YN</span>Your Name</a>
+    <a class="brand" href="index.html"><span class="brand-mark">YN</span><span class="brand-name">Your Name</span></a>
     <nav class="nav" aria-label="Main">
-      <a href="hardware.html">Hardware</a>
+      <a href="hardware.html" aria-current="page">Hardware</a>
       <a href="software.html">Software</a>
       <a href="shop.html">Shop</a>
       <a class="nav-hide" href="index.html#about">About</a>
@@ -53,11 +52,11 @@
   </div>
 </a>
 <a class="card reveal" href="projects/biped-robot.html">
-  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Robot standing on a desk, side view, legs straight</span></div></figure>
+  <figure class="media media--placeholder" style="--ratio: 16 / 10"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Robot walking across a desk, side view</span></div></figure>
   <div class="card-body">
-    <div class="card-top"><span class="label">Hardware · 2026</span><span class="status status--live">Balancing; gait in progress</span></div>
+    <div class="card-top"><span class="label">Hardware · 2026</span><span class="status status--live">Walking; tuning for speed</span></div>
     <h3>10-Servo Biped Robot</h3>
-    <p>A two-legged robot with five joints per leg, IMU-based balance, and a walking gait I tune against a simulator I wrote.</p>
+    <p>A two-legged robot I designed and 3D-printed, with five servo joints per leg and IMU balance. It walks twelve steps in a straight line.</p>
     <ul class="tags"><li>ESP32</li><li>PCA9685</li><li>MPU-6500</li><li>C++</li><li>Fusion</li></ul>
     <span class="more">Read the build <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </div>
