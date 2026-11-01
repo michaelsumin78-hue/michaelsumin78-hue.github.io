@@ -26,8 +26,7 @@ Then open http://localhost:8000.
 
 ## Fill in the placeholders
 
-1. **Contact.** Replace `you@example.com` and the `https://github.com/` link
-   in the footer of every page.
+1. **Contact.** Replace the `https://github.com/` link in the footer of every page.
 2. **About.** Search for `<!-- EDIT:` comments. They mark the spots that need
    facts only you know: school and grade in `index.html`, and details for
    Mantis Blades and the drone.
