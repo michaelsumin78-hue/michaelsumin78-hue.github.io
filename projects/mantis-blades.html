@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles.css?v=17">
-<script src="../assets/site.js?v=17"></script>
+<link rel="stylesheet" href="../assets/styles.css?v=18">
+<script src="../assets/site.js?v=18"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -43,12 +43,10 @@
     <ul class="tags"><li>ESP32</li><li>FastLED</li><li>3D printing</li><li>Wearable</li></ul>
     <dl class="facts"><div><dt>Role</dt><dd>Solo build</dd></div><div><dt>Timeline</dt><dd>2026</dd></div><div><dt>Tools</dt><dd>Fusion, ESP32, FastLED</dd></div><div><dt>Power</dt><dd>USB</dd></div></dl>
   </section>
-  <!-- EDIT: once the photo is in, move each scan point onto its part by
-       changing --x and --y (percent from the image's top left). -->
-  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">Blades deployed on forearm, lit</span></div><ul class="scan" aria-label="Parts in this image"><li style="--x:16%;--y:30%"><span><b>ESP32</b>controller</span></li><li style="--x:56%;--y:22%"><span><b>FastLED</b>LED effects</span></li><li style="--x:26%;--y:62%"><span><b>3D printing</b>printed shell</span></li><li style="--x:62%;--y:56%"><span><b>Wearable</b>forearm mount</span></li></ul></figure>
+  <figure class="media media--target" style="--ratio: 16 / 9"><img src="../assets/photos/mantis/blade-lit.jpg" width="1200" height="1600" alt="A Mantis Blade lit along its edge with blue LEDs" fetchpriority="high" decoding="async" style="object-position: 50% 28%"></figure>
   <div class="project-body">
     <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">Goal</a></li><li><a href="#how-it-works">How it works</a></li><li><a href="#next">Next</a></li></ol></aside>
-    <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>My first Cyberpunk build: wearable arm blades that light up with animated effects.</p><!-- EDIT: describe how the blades mount and deploy, and what you built them from. --></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>Controller.</strong> An ESP32 runs FastLED animations on addressable LEDs inside the blades.</li><li><strong>Power.</strong> USB, with a brightness cap in firmware to keep current in range.</li><li><strong>Trigger.</strong> I designed an EMG and force-sensor trigger path so a muscle flex could fire the effect.</li></ul><!-- EDIT: add the details only you know: blade length, materials, mechanism, what broke and how you fixed it. --><div class="media-row"><figure class="media media--placeholder" style="--ratio: 4 / 3"><div class="media__frame"><span class="media__tag">Photo needed</span><span class="media__desc">Close-up of the LED channel and electronics</span></div></figure></div></section><section id="next"><h2><span class="num">03</span>Next</h2><p>Move it to battery power and link it to the Sandevistan spine over ESP-NOW so the two props trigger each other.</p></section></article>
+    <article class="prose"><section id="goal"><h2><span class="num">01</span>Goal</h2><p>My first Cyberpunk build: wearable arm blades that light up with animated effects.</p><!-- EDIT: describe how the blades mount and deploy, and what you built them from. --></section><section id="how-it-works"><h2><span class="num">02</span>How it works</h2><ul><li><strong>Controller.</strong> An ESP32 runs FastLED animations on addressable LEDs inside the blades.</li><li><strong>Power.</strong> USB, with a brightness cap in firmware to keep current in range.</li><li><strong>Trigger.</strong> I designed an EMG and force-sensor trigger path so a muscle flex could fire the effect.</li></ul><!-- EDIT: add the details only you know: blade length, materials, mechanism, what broke and how you fixed it. --><div class="media-row"><figure class="media" style="--ratio: 4 / 3"><img src="../assets/photos/mantis/led-channel.jpg" width="750" height="1000" alt="Fitting the blue LED strip into the blade's channel" loading="lazy" decoding="async" style="object-position: 50% 40%"></figure></div></section><section id="next"><h2><span class="num">03</span>Next</h2><p>Move it to battery power and link it to the Sandevistan spine over ESP-NOW so the two props trigger each other.</p></section></article>
   </div>
 </div>
 <div class="next-project">
