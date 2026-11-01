@@ -87,151 +87,6 @@ function spineSVG() {
   return '<svg class="spine" viewBox="0 0 1600 900" aria-hidden="true" focusable="false">' + neck + out + "</svg>";
 }
 
-// Builds the braindance viewer from a project's .decision blocks and puts
-// it where the first one was. Scrubbing glitches the frame, the play
-// button steps through every stop, and Thermal recolors the frames.
-function buildBraindance(decisions) {
-  var STEP = 100;
-  var stops = Array.prototype.map.call(decisions, function (d) {
-    var title = d.querySelector("h3");
-    return { title: title ? title.textContent : "", body: d, fig: d.querySelector("figure") };
-  });
-  var n = stops.length, max = (n - 1) * STEP;
-  var project = (document.querySelector(".project-hero h1") || {}).textContent || "";
-
-  var bd = el("div", "bd");
-  var view = el("div", "bd-view");
-  var frames = stops.map(function (s, i) {
-    var f = s.fig;
-    if (f) {
-      f.parentNode.removeChild(f);
-    } else {
-      f = el("figure", "media media--placeholder");
-      var frame = el("div", "media__frame");
-      frame.appendChild(el("span", "media__tag", "Photo needed"));
-      frame.appendChild(el("span", "media__desc", "This stage: " + s.title));
-      f.appendChild(frame);
-    }
-    f.classList.add("bd-frame");
-    view.appendChild(f);
-    return f;
-  });
-  var ui = el("div", "bd-ui");
-  ui.setAttribute("aria-hidden", "true");
-  ui.appendChild(el("span", "bd-tag", "Braindance // " + project));
-  var rec = ui.appendChild(el("span", "bd-rec", ""));
-  var layer = ui.appendChild(el("span", "bd-layer", "Layer: Visual"));
-  view.appendChild(ui);
-
-  var controls = el("div", "bd-controls");
-  var play = controls.appendChild(el("button", "bd-btn bd-play", "Play"));
-  play.type = "button";
-  var track = controls.appendChild(el("div", "bd-track"));
-  stops.forEach(function (s, i) {
-    var mark = track.appendChild(el("button", "bd-mark", String(i + 1).padStart(2, "0")));
-    mark.type = "button";
-    mark.style.left = (i / (n - 1) * 100) + "%";
-    mark.setAttribute("aria-label", "Stop " + (i + 1) + ": " + s.title);
-    mark.addEventListener("click", function () { stopPlay(); glideTo(i * STEP); });
-  });
-  var range = track.appendChild(el("input", "bd-range"));
-  range.type = "range";
-  range.min = 0; range.max = max; range.step = 1; range.value = 0;
-  range.setAttribute("aria-label", "Scrub the build log");
-  var thermal = controls.appendChild(el("button", "bd-btn bd-thermal", "Thermal"));
-  thermal.type = "button";
-  thermal.setAttribute("aria-pressed", "false");
-
-  var caption = el("div", "bd-caption");
-  caption.setAttribute("aria-live", "polite");
-  var num = caption.appendChild(el("span", "bd-num", ""));
-  var body = caption.appendChild(el("div", "bd-body"));
-
-  bd.appendChild(view);
-  bd.appendChild(controls);
-  bd.appendChild(caption);
-  decisions[0].parentNode.insertBefore(bd, decisions[0]);
-  stops.forEach(function (s) { s.body.parentNode.removeChild(s.body); });
-
-  var current = -1, scrubTimer = null, playTimer = null, glide = null;
-  function timecode(v) {
-    var total = v / STEP * 4.2, s = Math.floor(total), f = Math.floor((total - s) * 24);
-    var pad = function (x) { return String(x).padStart(2, "0"); };
-    return "Rec " + pad(Math.floor(s / 60)) + ":" + pad(s % 60) + ":" + pad(f);
-  }
-  function render(v, scrubbing) {
-    range.value = v;
-    track.style.setProperty("--p", (v / max * 100) + "%");
-    rec.textContent = timecode(v);
-    var i = Math.round(v / STEP);
-    if (i !== current) {
-      current = i;
-      frames.forEach(function (f, k) { f.classList.toggle("is-on", k === i); });
-      track.querySelectorAll(".bd-mark").forEach(function (m, k) { m.classList.toggle("is-on", k === i); });
-      num.textContent = String(i + 1).padStart(2, "0") + " / " + String(n).padStart(2, "0");
-      body.textContent = "";
-      Array.prototype.forEach.call(stops[i].body.children, function (c) { body.appendChild(c.cloneNode(true)); });
-    }
-    if (scrubbing) {
-      view.classList.add("is-scrubbing");
-      clearTimeout(scrubTimer);
-      scrubTimer = setTimeout(function () { view.classList.remove("is-scrubbing"); }, 140);
-    }
-  }
-  function glideTo(to, done) {
-    cancelAnimationFrame(glide);
-    var from = +range.value, t0 = performance.now(), dur = 520;
-    (function frame(now) {
-      var k = Math.min(1, (now - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-      render(from + (to - from) * e, true);
-      if (k < 1) glide = requestAnimationFrame(frame);
-      else if (done) done();
-    })(t0);
-  }
-  function stopPlay() {
-    clearTimeout(playTimer);
-    playTimer = null;
-    play.textContent = "Play";
-    bd.classList.remove("is-playing");
-  }
-  function next() {
-    var i = Math.round(+range.value / STEP);
-    if (i >= n - 1) { stopPlay(); return; }
-    glideTo((i + 1) * STEP, function () { if (playTimer) playTimer = setTimeout(next, 2600); });
-  }
-  play.addEventListener("click", function () {
-    if (playTimer) { stopPlay(); return; }
-    play.textContent = "Pause";
-    bd.classList.add("is-playing");
-    if (Math.round(+range.value / STEP) >= n - 1) render(0, true);
-    playTimer = setTimeout(next, 900);
-  });
-  range.addEventListener("input", function () { stopPlay(); render(+range.value, true); });
-  range.addEventListener("change", function () { glideTo(Math.round(+range.value / STEP) * STEP); });
-  thermal.addEventListener("click", function () {
-    var on = view.classList.toggle("is-thermal");
-    thermal.setAttribute("aria-pressed", String(on));
-    layer.textContent = on ? "Layer: Thermal" : "Layer: Visual";
-  });
-
-  // The thermal palette: luminance mapped from black through purple and red
-  // to yellow and white.
-  if (!document.getElementById("bd-thermal")) {
-    var svgNS = "http://www.w3.org/2000/svg";
-    var defs = document.createElementNS(svgNS, "svg");
-    defs.setAttribute("width", "0"); defs.setAttribute("height", "0");
-    defs.setAttribute("aria-hidden", "true");
-    defs.style.position = "absolute";
-    defs.innerHTML = '<filter id="bd-thermal" color-interpolation-filters="sRGB">' +
-      '<feColorMatrix type="matrix" values=".33 .33 .33 0 0 .33 .33 .33 0 0 .33 .33 .33 0 0 0 0 0 1 0"/>' +
-      '<feComponentTransfer><feFuncR type="table" tableValues="0 .35 .9 1 1"/>' +
-      '<feFuncG type="table" tableValues="0 0 .12 .7 1"/>' +
-      '<feFuncB type="table" tableValues=".08 .45 .12 0 .85"/></feComponentTransfer></filter>';
-    document.body.appendChild(defs);
-  }
-  render(0, false);
-}
-
 // Page behaviors once the DOM is ready.
 (function () {
   document.addEventListener("DOMContentLoaded", function () {
@@ -280,12 +135,6 @@ function buildBraindance(decisions) {
       if (tag) tag.textContent = "Concept diagram";
       if (desc) desc.textContent = "Build photo coming";
     });
-
-    // Braindance build log: the "Design decisions" become stops on a
-    // scrubbable timeline. Each stop shows the <figure> inside its
-    // .decision, or a placeholder. Without this script the list stays as is.
-    var decisions = document.querySelectorAll("#design-decisions .decision");
-    if (decisions.length >= 2) buildBraindance(decisions);
 
     // The hero crosshair drifts a little as the page scrolls.
     var reticle = document.querySelector(".hero-reticle");
@@ -336,7 +185,7 @@ function buildBraindance(decisions) {
     }, { rootMargin: "0px 0px -8% 0px" });
     items.forEach(function (el) { io.observe(el); });
     document.querySelectorAll(".media").forEach(function (el) {
-      if (el.closest(".hero-art") || el.closest(".bd")) return;
+      if (el.closest(".hero-art")) return;
       el.classList.add("cut");
       io.observe(el);
     });
