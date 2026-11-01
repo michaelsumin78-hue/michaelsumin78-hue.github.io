@@ -478,16 +478,6 @@ p { margin: 0 0 1em; }
 @keyframes scan-sweep { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0; } }
 @media (max-width: 640px) { .scan li { font-size: 9px; } }
 
-/* ---------- Sandevistan concept diagram ---------- */
-/* Drawn by site.js into the Sandevistan frames until there is a photo. */
-.spine { position: absolute; inset: 0; width: 100%; height: 100%; }
-.spine .win, .spine .glow { fill: var(--accent); }
-.spine .glow { mix-blend-mode: screen; }
-.media--target.has-diagram::after { display: none; }
-.has-diagram .media__desc { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
-.media--target.has-diagram .hud .br { display: none; }
-@media (max-width: 640px) { .has-diagram .media__desc { display: none; } }
-
 /* ---------- Project page ---------- */
 .crumb { padding-top: 32px; font-size: 13px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .crumb a { color: var(--muted); text-decoration: none; }
