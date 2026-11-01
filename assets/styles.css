@@ -374,6 +374,17 @@ p { margin: 0 0 1em; }
 .prose .media-row.media-row--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 639px) { .prose .media-row.media-row--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
+/* Dated build progression: a rail down the left with a marker per stage. */
+.timeline { list-style: none; padding: 0 0 0 22px; margin: 8px 0 0; border-left: 2px solid var(--line-strong); }
+.prose .timeline > li { position: relative; margin: 0 0 40px; color: var(--ink); }
+.timeline > li::before {
+  content: ""; position: absolute; left: -29px; top: 3px; width: 12px; height: 12px;
+  background: var(--accent); border: 2px solid var(--bg);
+}
+.timeline > li > .label { color: var(--accent); }
+.timeline h3 { font-size: 22px; text-transform: uppercase; letter-spacing: .04em; margin: 6px 0 4px; }
+.prose .timeline .media-row { margin-top: 14px; }
+
 /* Optional deep-dive tucked under a project's main story. */
 .more-detail { margin-top: 24px; border: 1px solid var(--line-strong); background: var(--surface); }
 .more-detail > summary {
