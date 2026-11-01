@@ -168,7 +168,7 @@ p { margin: 0 0 1em; }
   max-width: 14ch;
   line-height: 0.98;
 }
-.hero h1 em { font-style: normal; color: var(--accent); }
+.hero h1 em { font-style: normal; color: var(--accent); white-space: nowrap; }
 .hero .lede {
   margin-top: 24px; max-width: 58ch;
   font-size: clamp(18px, 2vw, 21px); color: var(--ink-2);
