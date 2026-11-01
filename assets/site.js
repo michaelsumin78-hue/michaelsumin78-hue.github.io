@@ -1,3 +1,6 @@
+// Lets the CSS hide scroll-reveal content only when this script can show it again.
+document.documentElement.classList.add("js");
+
 function el(tag, cls, text) {
   var n = document.createElement(tag);
   if (cls) n.className = cls;
@@ -284,22 +287,37 @@ function buildBraindance(decisions) {
     var decisions = document.querySelectorAll("#design-decisions .decision");
     if (decisions.length >= 2) buildBraindance(decisions);
 
-    // The home page's red shards and crosshair drift at different speeds
-    // as the page scrolls.
-    var burst = document.querySelector(".hero-burst");
+    // The hero crosshair drifts a little as the page scrolls.
     var reticle = document.querySelector(".hero-reticle");
-    if (burst && reticle && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (reticle && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       var ticking = false;
       window.addEventListener("scroll", function () {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(function () {
-          var y = window.scrollY;
-          burst.style.transform = "translateY(" + (y * -0.12) + "px)";
-          reticle.style.transform = "translateY(" + (y * 0.06) + "px)";
+          reticle.style.transform = "translateY(" + (window.scrollY * 0.06) + "px)";
           ticking = false;
         });
       }, { passive: true });
+    }
+
+    // The table of contents marks the section you are reading.
+    var tocLinks = document.querySelectorAll(".toc a[href^='#']");
+    if (tocLinks.length && "IntersectionObserver" in window) {
+      var byId = {};
+      tocLinks.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          tocLinks.forEach(function (a) { a.removeAttribute("aria-current"); });
+          var link = byId[entry.target.id];
+          if (link) link.setAttribute("aria-current", "true");
+        });
+      }, { rootMargin: "-30% 0px -60% 0px" });
+      Object.keys(byId).forEach(function (id) {
+        var sec = document.getElementById(id);
+        if (sec) spy.observe(sec);
+      });
     }
 
     // Fade sections in, and cut images open, as they scroll into view.
