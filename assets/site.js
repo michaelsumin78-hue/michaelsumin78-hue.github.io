@@ -136,19 +136,23 @@ function spineSVG() {
       if (desc) desc.textContent = "Build photo coming";
     });
 
-    // The hero crosshair drifts a little as the page scrolls.
-    var reticle = document.querySelector(".hero-reticle");
-    if (reticle && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      var ticking = false;
-      window.addEventListener("scroll", function () {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(function () {
-          reticle.style.transform = "translateY(" + (window.scrollY * 0.06) + "px)";
-          ticking = false;
-        });
-      }, { passive: true });
-    }
+    // Hero slideshow: crossfade to the next photo every few seconds. Holds
+    // still under reduced motion, and pauses while the pointer is over it.
+    document.querySelectorAll(".media--cycle").forEach(function (fig) {
+      var imgs = fig.querySelectorAll("img");
+      if (imgs.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var i = 0, paused = false;
+      fig.addEventListener("mouseenter", function () { paused = true; });
+      fig.addEventListener("mouseleave", function () { paused = false; });
+      setInterval(function () {
+        if (paused || document.hidden) return;
+        var next = imgs[(i + 1) % imgs.length];
+        if (next.loading === "lazy") next.loading = "eager";
+        imgs[i].classList.remove("is-on");
+        i = (i + 1) % imgs.length;
+        next.classList.add("is-on");
+      }, 4500);
+    });
 
     // The table of contents marks the section you are reading.
     var tocLinks = document.querySelectorAll(".toc a[href^='#']");

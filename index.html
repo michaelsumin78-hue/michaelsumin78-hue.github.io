@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=19">
-<script src="assets/site.js?v=19"></script>
+<link rel="stylesheet" href="assets/styles.css?v=20">
+<script src="assets/site.js?v=20"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -50,8 +50,14 @@
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">
-    <figure class="media" style="--ratio: 4 / 5"><img src="assets/photos/sandevistan/worn.jpg" width="1050" height="1400" alt="Me from behind wearing the Sandevistan prototype, its segments lit green down my spine" fetchpriority="high" decoding="async" style="object-position: 50% 30%"></figure>
-    <svg class="hero-reticle" viewBox="0 0 496 580" fill="none"><circle cx="306" cy="296" r="38" stroke-width="4" stroke-dasharray="140 14 46 39" transform="rotate(-80 306 296)"/><path stroke-width="3" d="M306 0v210M306 390v190M0 296h196M404 296h60M478 296h18"/><path stroke-width="10" d="M420 296h22"/></svg>
+    <!-- Hero slideshow: each <img> here takes a turn, about 4.5 s each.
+         To add a photo, copy an <img> line and change src, size and alt.
+         The first one (class="is-on") shows first and is the only one
+         people see if scripts are off. -->
+    <figure class="media media--cycle" style="--ratio: 4 / 5">
+      <img class="is-on" src="assets/photos/sandevistan/worn.jpg" width="1050" height="1400" alt="Me from behind wearing the Sandevistan prototype, its segments lit green down my spine" fetchpriority="high" decoding="async" style="object-position: 50% 30%">
+      <img src="assets/photos/about/me-camcorder.jpg" width="750" height="1000" alt="Me at night holding up the teal camcorder I built" loading="lazy" decoding="async" style="object-position: 35% 60%">
+    </figure>
   </div>
   </div>
 </section>

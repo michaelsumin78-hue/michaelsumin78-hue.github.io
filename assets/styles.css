@@ -180,18 +180,17 @@ p { margin: 0 0 1em; }
 .dot { width: 7px; height: 7px; background: var(--green); display: inline-block; }
 .hero-actions { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* Hero art: a photo frame over an offset red outline, with the page's one
-   yellow crosshair running past its edges. */
+/* Hero art: a photo frame over an offset red outline. */
 .hero-art { position: relative; max-width: 400px; width: 82%; margin: 0 auto; }
 .hero-art::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   border: 1px solid var(--accent); transform: translate(18px, 18px);
 }
 .hero-art .media { position: relative; z-index: 1; border-color: var(--ink-2); }
-.hero-reticle {
-  position: absolute; pointer-events: none; z-index: 2; stroke: var(--yellow);
-  top: -8%; left: -12%; width: 124%; height: 116%;
-}
+/* Hero slideshow: photos stack and crossfade; site.js moves .is-on along. */
+.media--cycle img { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+.media--cycle img.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .media--cycle img { transition: none; } }
 
 .btn {
   --cut: 9px;
