@@ -26,11 +26,9 @@ Then open http://localhost:8000.
 
 ## Fill in the placeholders
 
-1. **Your name.** Find and replace `Your Name` and the initials `YN` across
-   every `.html` file (VS Code: Ctrl+Shift+H).
-2. **Contact.** Replace `you@example.com` and the `https://github.com/` link
+1. **Contact.** Replace `you@example.com` and the `https://github.com/` link
    in the footer of every page.
-3. **About.** Search for `<!-- EDIT:` comments. They mark the spots that need
+2. **About.** Search for `<!-- EDIT:` comments. They mark the spots that need
    facts only you know: school and grade in `index.html`, and details for
    Mantis Blades and the drone.
 
