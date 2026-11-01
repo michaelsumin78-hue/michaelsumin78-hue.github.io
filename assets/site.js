@@ -47,6 +47,13 @@ function el(tag, cls, text) {
       if (tr) tr.textContent = "Scan ready";
     }
 
+    // Looping videos hold still for people who ask for reduced motion.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll("video[autoplay]").forEach(function (vid) {
+        vid.removeAttribute("autoplay"); vid.pause(); vid.controls = true;
+      });
+    }
+
     // Hero slideshow: crossfade to the next photo every few seconds. Holds
     // still under reduced motion, and pauses while the pointer is over it.
     document.querySelectorAll(".media--cycle").forEach(function (fig) {
