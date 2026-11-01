@@ -3,27 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CNC Machine Repair | Michael Sumin</title>
-<meta name="description" content="Bringing a broken CNC machine back to working order.">
-<meta property="og:title" content="CNC Machine Repair | Michael Sumin">
-<meta property="og:description" content="Bringing a broken CNC machine back to working order.">
-<!-- EDIT: once the site is live, make this an absolute URL
-     (https://you.github.io/.../assets/og.png); some apps ignore relative ones. -->
-<meta property="og:image" content="../assets/og.png">
+<title>CNC Machine Repair | michael_sumin.dev</title>
+<meta name="description" content="Fixing my school's i2R8 CNC machine after it started ignoring its limits and driving past the end of the Y axis.">
+<meta property="og:title" content="CNC Machine Repair | michael_sumin.dev">
+<meta property="og:description" content="Fixing my school's i2R8 CNC machine after it started ignoring its limits and driving past the end of the Y axis.">
+<meta property="og:image" content="https://michaelsumin78-hue.github.io/assets/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0a0a">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../assets/favicon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles.css?v=25">
-<script src="../assets/site.js?v=25"></script>
+<link rel="stylesheet" href="../assets/styles.css?v=27">
+<script src="../assets/site.js?v=27"></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="../index.html"><span class="brand-mark">MS</span><span class="brand-name">Michael Sumin</span></a>
+    <a class="brand" href="../index.html"><span class="brand-mark">MS</span><span class="brand-name">michael_sumin.dev</span></a>
     <nav class="nav" aria-label="Main">
       <a href="../hardware.html">Hardware</a>
       <a href="../software.html">Software</a>
@@ -37,16 +37,16 @@
 <div class="wrap">
   <p class="crumb"><a href="../shop.html">&larr; Shop &amp; Makerspace</a></p>
   <section class="project-hero">
-    <div class="card-top"><span class="label">Year</span><!-- EDIT: year --><span class="status">Write-up coming</span></div>
+    <div class="card-top"><span class="label">2026</span><span class="status">Replacing the Y sensor</span></div>
     <h1>CNC Machine Repair</h1>
-    <p class="lede">Bringing a broken CNC machine back to working order.</p>
-    <ul class="tags"><li>Diagnosis</li><li>Repair</li><li>CNC</li></ul>
-    <dl class="facts"><div><dt>Role</dt><dd>Diagnosis and repair</dd></div></dl>
+    <p class="lede">Fixing my school's i2R8 CNC machine after it started ignoring its limits and driving past the end of the Y axis.</p>
+    <ul class="tags"><li>Diagnosis</li><li>UCCNC</li><li>Limit sensors</li><li>CNC</li></ul>
+    <dl class="facts"><div><dt>Role</dt><dd>Diagnosis and repair</dd></div><div><dt>Machine</dt><dd>i2R8 CNC router</dd></div><div><dt>Software</dt><dd>UCCNC</dd></div><div><dt>Fault</dt><dd>Dead Y-axis limit sensor</dd></div></dl>
   </section>
-  <figure class="media media--placeholder media--target" style="--ratio: 16 / 9"><div class="media__frame"><span class="media__tag">Hero photo or video needed</span><span class="media__desc">The machine running its first cut after the repair</span></div></figure>
+  <figure class="media" style="--ratio: 4 / 3"><img src="../assets/photos/cnc/machine.jpg" width="1600" height="1200" alt="The school's i2R8 CNC machine: the spindle on its gantry over the slotted aluminum bed" fetchpriority="high" decoding="async"></figure>
   <div class="project-body">
-    <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">The problem</a></li><li><a href="#how-it-works">How I fixed it</a></li></ol></aside>
-    <article class="prose"><section id="goal"><h2><span class="num">01</span>The problem</h2><p>Write-up coming.</p><!-- EDIT: what machine, who it belongs to (school? makerspace?), what was wrong when you found it. --></section><section id="how-it-works"><h2><span class="num">02</span>How I fixed it</h2><p>Write-up coming.</p><!-- EDIT: how you tracked down the fault, what you replaced or rebuilt, and how you proved it worked. Readers want the reasoning: what you ruled out and why. --></section></article>
+    <aside class="toc"><span class="label">On this page</span><ol><li><a href="#goal">The problem</a></li><li><a href="#how-it-works">Finding the fault</a></li><li><a href="#next">Next</a></li></ol></aside>
+    <article class="prose"><section id="goal"><h2><span class="num">01</span>The problem</h2><p>This year I was tasked with fixing my school's CNC machine. It broke after a student misused it and the machine dug into itself. Since then it ignored its machine limits and pushed itself along the Y axis farther than it can go.</p></section><section id="how-it-works"><h2><span class="num">02</span>Finding the fault</h2><p>The machine is an i2R8, so I took some time to research it first. Then I set up the UCCNC control software on my laptop so I could figure out what the software wasn't seeing.</p><p>With UCCNC running, I worked out how the machine actually functions. Each axis has a limit sensor, and a metal bracket on the moving part passes in front of it. When the sensor detects the bracket, the machine stops before it can go any farther.</p><p>The X and Z sensors were working properly, but the Y sensor wasn't. After some troubleshooting I found that the Y-axis sensor was completely dead, so nothing told the machine to stop.</p></section><section id="next"><h2><span class="num">03</span>Next</h2><p>I'm currently working on a new sensor to replace the old one.</p></section></article>
   </div>
 </div>
 <div class="next-project">
@@ -61,7 +61,7 @@
       <h2>Want to see something running? Ask me.</h2>
       <div class="contact-links">
         <a class="btn btn-primary" href="mailto:michaelsumin78@gmail.com">Email me</a>
-        <a class="btn" href="https://github.com/">GitHub</a>
+        <a class="btn" href="https://github.com/michaelsumin78-hue">GitHub</a>
       </div>
     </div>
     <p class="fine">Designed and built by Michael Sumin. Every project on this site is my own work.</p>

@@ -286,13 +286,6 @@ p { margin: 0 0 1em; }
 }
 .card:hover { --edge: var(--accent); transform: translateY(-2px); }
 .card .media { border: 0; border-bottom: 1px solid var(--line); }
-/* Hovering a card locks the crosshair onto its photo. */
-.card .media::after {
-  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background: url("reticle.svg") no-repeat center / min(46%, 150px);
-  opacity: 0; transform: scale(1.25); transition: opacity .2s, transform .25s;
-}
-.card:hover .media::after { opacity: 1; transform: none; }
 .card-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .card-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 12px; }
 .card-top .label { white-space: nowrap; }
@@ -339,10 +332,6 @@ p { margin: 0 0 1em; }
 /* Add .media--ink to a figure for the screen-print look: black and white,
    crushed contrast. Use it on build shots, never on the About photo. */
 .media--ink img, .media--ink video { filter: grayscale(1) contrast(1.6) brightness(1.05); }
-.media--target::after {
-  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background: url("reticle.svg") no-repeat 62% 48% / min(30%, 220px);
-}
 .media--placeholder {
   background-color: var(--bg);
   background-image:
@@ -581,3 +570,6 @@ p { margin: 0 0 1em; }
   .hud .tr::before { animation: none; }
   .card, .group-tile, .card .media::after, .nav a::after { transition: none; }
 }
+
+/* Project logo inline with a title */
+.title-logo { display: inline-block; width: 0.85em; height: 0.85em; margin-right: 0.25em; vertical-align: -0.1em; }

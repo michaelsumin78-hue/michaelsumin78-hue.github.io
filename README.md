@@ -12,7 +12,7 @@ software.html         Software Tools page
 assets/styles.css     all styling
 assets/site.js        HUD readouts, parallax, scroll reveals
 assets/og.png         share card shown when the link is pasted into a message
-assets/favicon.svg
+assets/favicon-32.png
 media/                put your photos and videos here (create it)
 ```
 
