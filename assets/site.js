@@ -1,13 +1,6 @@
 // Lets the CSS hide scroll-reveal content only when this script can show it again.
 document.documentElement.classList.add("js");
 
-function el(tag, cls, text) {
-  var n = document.createElement(tag);
-  if (cls) n.className = cls;
-  if (text != null) n.textContent = text;
-  return n;
-}
-
 // Page behaviors once the DOM is ready.
 (function () {
   document.addEventListener("DOMContentLoaded", function () {
@@ -18,34 +11,6 @@ function el(tag, cls, text) {
         window.location.href = row.getAttribute("data-href");
       });
     });
-
-    // HUD readouts on a project's main image: its name, and its first tags.
-    var target = document.querySelector(".media--target");
-    var title = document.querySelector(".project-hero h1");
-    if (target && title) {
-      var tags = Array.prototype.slice.call(document.querySelectorAll(".project-hero .tags li"), 0, 3)
-        .map(function (li) { return li.textContent; }).join(" / ");
-      var hud = document.createElement("figcaption");
-      hud.className = "hud";
-      hud.setAttribute("aria-hidden", "true");
-      [["tl", "Target // " + title.textContent], ["tr", "Lock"], ["br", tags]].forEach(function (p) {
-        var s = document.createElement("span");
-        s.className = p[0];
-        s.textContent = p[1];
-        hud.appendChild(s);
-      });
-      target.appendChild(hud);
-    }
-
-    // Scanner: hovering, focusing or tapping a project's main image sweeps
-    // it and pops up labels on the parts listed in its .scan list.
-    if (target && target.querySelector(".scan")) {
-      target.tabIndex = 0;
-      target.classList.add("has-scan");
-      target.addEventListener("click", function () { target.classList.toggle("is-scanning"); });
-      var tr = target.querySelector(".hud .tr");
-      if (tr) tr.textContent = "Scan ready";
-    }
 
     // Looping videos hold still for people who ask for reduced motion.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {

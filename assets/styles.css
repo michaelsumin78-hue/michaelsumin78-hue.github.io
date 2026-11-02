@@ -443,61 +443,6 @@ p { margin: 0 0 1em; }
 }
 .section--paper .media { --muted: #8a8884; --line-strong: #444; }
 
-/* ---------- HUD readouts ---------- */
-/* Corner readouts on a project's main image, filled in by site.js from the
-   page title and tags, like a targeting display locked onto the build. */
-.hud {
-  position: absolute; inset: 0; z-index: 3; pointer-events: none;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--ink);
-}
-.hud span { position: absolute; padding: 3px 7px; background: rgba(10, 10, 10, 0.78); white-space: nowrap; }
-.hud .tl { top: 24px; left: 24px; }
-.hud .tr { top: 24px; right: 24px; color: var(--accent); }
-.hud .br { bottom: 24px; right: 24px; color: var(--muted); }
-.hud .tr::before {
-  content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 7px;
-  background: var(--accent); animation: hud-blink 1.2s steps(1) infinite;
-}
-@keyframes hud-blink { 50% { opacity: 0; } }
-@media (max-width: 640px) { .hud .br { display: none; } }
-
-/* ---------- Scanner hotspots ---------- */
-/* Hover, focus or tap a project's main image: the crosshair drops, a line
-   sweeps down, and labeled markers pop up on the parts. */
-.scan { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; z-index: 4; pointer-events: none; }
-.scan li {
-  position: absolute; left: var(--x); top: var(--y);
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-2); white-space: nowrap;
-  opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .25s;
-}
-.scan li::before {
-  content: ""; flex: none; width: 12px; height: 12px; margin-left: -6px;
-  border: 1.5px solid var(--yellow); background: radial-gradient(circle, var(--yellow) 0 2px, transparent 2.5px);
-}
-.scan li span { padding: 3px 7px; background: rgba(10, 10, 10, 0.85); border-left: 2px solid var(--yellow); }
-.scan b { color: var(--yellow); font-weight: 500; margin-right: 6px; }
-.scan::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; opacity: 0;
-  background: var(--yellow); box-shadow: 0 0 0 1px rgba(255, 230, 0, .2);
-}
-.has-scan { cursor: crosshair; }
-.has-scan::after { transition: opacity .2s; }
-.has-scan:is(:hover, :focus-visible, .is-scanning)::after { opacity: 0; }
-.has-scan:is(:hover, :focus-visible, .is-scanning) .scan li { opacity: 1; transform: none; }
-.has-scan:is(:hover, :focus-visible, .is-scanning) .scan li:nth-child(2) { transition-delay: .08s; }
-.has-scan:is(:hover, :focus-visible, .is-scanning) .scan li:nth-child(3) { transition-delay: .16s; }
-.has-scan:is(:hover, :focus-visible, .is-scanning) .scan li:nth-child(4) { transition-delay: .24s; }
-.has-scan:is(:hover, :focus-visible, .is-scanning) .scan::before { animation: scan-sweep .6s ease-out; }
-.scan li.is-left { flex-direction: row-reverse; transform: translate(-100%, 6px); }
-.scan li.is-left::before { margin: 0 -6px 0 0; }
-.scan li.is-left span { border-left: 0; border-right: 2px solid var(--yellow); }
-.has-scan:is(:hover, :focus-visible, .is-scanning) .scan li.is-left { transform: translateX(-100%); }
-@keyframes scan-sweep { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0; } }
-@media (max-width: 640px) { .scan li { font-size: 9px; } }
-
 /* ---------- Project page ---------- */
 .crumb { padding-top: 32px; font-size: 13px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
 .crumb a { color: var(--muted); text-decoration: none; }
@@ -545,7 +490,7 @@ p { margin: 0 0 1em; }
 .decision {
   background: var(--surface);
   padding: 18px 20px 18px 22px; margin: 0 0 12px;
-  box-shadow: inset 3px 0 0 var(--accent);
+  border: 1px solid var(--line);
 }
 .decision h3 { font-size: 20px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
 .decision p { margin: 0; font-size: 16px; }
@@ -567,7 +512,6 @@ p { margin: 0 0 1em; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hud .tr::before { animation: none; }
   .card, .group-tile, .card .media::after, .nav a::after { transition: none; }
 }
 

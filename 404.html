@@ -10,9 +10,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@600;700&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- GitHub Pages serves this page at whatever address was mistyped, so it
-     carries its own styles instead of linking assets/styles.css by a
-     relative path that would break. -->
 <style>
   :root { color-scheme: dark; --bg: #0a0a0a; --ink: #f2f0eb; --ink-2: #c4c2bd; --muted: #8a8884; --accent: #ff2a2a; --yellow: #ffe600; }
   * { box-sizing: border-box; }
@@ -23,7 +20,6 @@
     padding: 32px 16px;
   }
   main { display: flex; gap: clamp(28px, 6vw, 64px); align-items: center; flex-wrap: wrap; justify-content: center; max-width: 900px; }
-  svg { width: clamp(120px, 22vw, 200px); height: auto; flex: none; }
   .label { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0; }
   h1 { font-family: "Rajdhani", system-ui, sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; line-height: .95; font-size: clamp(48px, 9vw, 96px); margin: 10px 0 16px; }
   p { color: var(--ink-2); max-width: 40ch; margin: 0 0 28px; }
@@ -38,13 +34,8 @@
 </head>
 <body>
 <main>
-  <!-- The site's yellow crosshair, locked on nothing. -->
-  <svg viewBox="0 0 200 200" fill="none" stroke="#ffe600" aria-hidden="true">
-    <circle cx="100" cy="100" r="44" stroke-width="6" stroke-dasharray="150 18 60 48" transform="rotate(-70 100 100)"/>
-    <path stroke-width="3" d="M104 0v74M104 126v74M0 98h64M136 98h40M184 98h16"/><path stroke-width="8" d="M150 98h14"/>
-  </svg>
   <div>
-    <p class="label">Error 404 // Read failed</p>
+    <p class="label">Error 404</p>
     <h1>Page not found</h1>
     <p>This page doesn't exist, or the link broke on the way here.</p>
     <a class="btn" href="/">Back to the projects</a>
